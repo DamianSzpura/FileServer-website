@@ -1,0 +1,25 @@
+.main-nav {
+  position: relative;
+  left: 0;
+  right: 0;
+  z-index: 1;
+
+  li {
+    a {
+      cursor: pointer;
+      padding: 10px 16px;
+      border-radius: 4px;
+    }
+
+    .fa {
+      margin-right: 10px;
+    }
+
+    &.link-active a,
+    &.link-active a:hover,
+    &.link-active a:focus {
+      background-color: #4189C7;
+      color: white;
+    }
+  }
+}
