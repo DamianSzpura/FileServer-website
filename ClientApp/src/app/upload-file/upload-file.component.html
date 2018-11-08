@@ -14,7 +14,7 @@
 </span>
 
 <div>
-  <ul *ngFor="let file of files">
-    <li>{{file}}</li>
+  <ul>
+    <li *ngFor="let file of files"><button class="btn btn-danger" (click)="delete(file)">DELETE</button>{{file}}</li>
   </ul>
 </div>

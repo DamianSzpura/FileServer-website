@@ -16,6 +16,21 @@ export class UploadFileComponent {
     }, error => console.error(error));
   }
 
+  delete(file) {
+    const formData = new FormData();
+
+    formData.append(file, file);
+
+    const deleteReq = new HttpRequest('DELETE', 'api/upload', formData, { reportProgress: true, });
+
+    this.http.request(deleteReq).subscribe(event => {
+      if (event.type === HttpEventType.Response) {
+        window.location.reload();
+        this.message = event.body.toString();
+      }
+    });
+  }
+
   upload(files) {
     var bar = <HTMLElement>document.getElementById('prog-bar');
     if (files.lenght === 0)
