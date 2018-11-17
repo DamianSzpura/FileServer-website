@@ -1,0 +1,21 @@
+﻿.card--box {
+  width: 10rem;
+  height: 15rem;
+  margin: 5px 5px 5px 5px;
+}
+.card-header {
+  table-layout: fixed;
+}
+.card-header p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.card-footer {
+  visibility: visible;
+  transition: ease-in-out 0.5s;
+}
+.card-footer--hidden {
+  visibility: hidden;
+  display: none;
+}

@@ -37,22 +37,24 @@ namespace FileServer_website.Controllers
 
         private void CopyFileToServer()
         {
-            var file = Request.Form.Files[0];
+            var files = Request.Form.Files;
 
             if (!Directory.Exists(_pathToFolder))
             {
                 Directory.CreateDirectory(_pathToFolder);
             }
-
-            if (file.Length <= 0)
-                throw new IOException(string.Format("File length is equal 0. Cannot upload such a file."));
-            else
+            foreach (var file in files)
             {
-                string fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                string fullPathToFile = Path.Combine(_pathToFolder, fileName);
-                using (var stream = new FileStream(fullPathToFile, FileMode.Create))
+                if (file.Length <= 0)
+                    throw new IOException(string.Format("File length is equal 0. Cannot upload such a file."));
+                else
                 {
-                    file.CopyTo(stream);
+                    string fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                    string fullPathToFile = Path.Combine(_pathToFolder, fileName);
+                    using (var stream = new FileStream(fullPathToFile, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
                 }
             }
         }

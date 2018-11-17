@@ -1,9 +1,13 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
+import { element } from 'protractor';
+import { Element } from '@angular/compiler/src/render3/r3_ast';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-upload-file',
-  templateUrl: './upload-file.component.html'
+  templateUrl: './upload-file.component.html',
+  styleUrls: ['./upload-file.component.css']
 })
 export class UploadFileComponent {
   public progress: number;
@@ -16,6 +20,22 @@ export class UploadFileComponent {
     }, error => console.error(error));
   }
 
+  showFooter(file) {
+    var listOfAllFiles = document.getElementById(file).parentElement.parentElement.children;
+    var footerOfFile;
+
+    var fileToEdit = document.getElementById(file).lastElementChild;
+
+    for (var i = 0; i < listOfAllFiles.length; i++) {
+      footerOfFile = listOfAllFiles[i].lastElementChild.lastElementChild;
+
+      if (!footerOfFile.classList.contains('card-footer--hidden'))
+        footerOfFile.classList.add('card-footer--hidden');
+    }
+
+    fileToEdit.classList.remove('card-footer--hidden');
+  }
+
   delete(file) {
     const formData = new FormData();
 
@@ -25,7 +45,6 @@ export class UploadFileComponent {
 
     this.http.request(deleteReq).subscribe(event => {
       if (event.type === HttpEventType.Response) {
-        window.location.reload();
         this.message = event.body.toString();
       }
     });
