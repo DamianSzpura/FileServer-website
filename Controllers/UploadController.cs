@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.Http.Headers;
 using System.Linq;
+using System.Net.Http.Headers;
 
 namespace FileServer_website.Controllers
 {
@@ -12,11 +13,12 @@ namespace FileServer_website.Controllers
     public class UploadController : Controller
     {
         private IHostingEnvironment _hostingEnvironment;
+        private string _pathToFolder;
 
-        //lol
         public UploadController(IHostingEnvironment hostingEnvironment)
         {
             _hostingEnvironment = hostingEnvironment;
+            _pathToFolder = Path.Combine(_hostingEnvironment.WebRootPath, "Upload");
         }
 
         [HttpPost, DisableRequestSizeLimit]
@@ -27,7 +29,7 @@ namespace FileServer_website.Controllers
                 CopyFileToServer();
                 return Json("Upload Successful!");
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 return Json("Upload Failed: " + ex.Message);
             }
@@ -35,39 +37,62 @@ namespace FileServer_website.Controllers
 
         private void CopyFileToServer()
         {
-            var file = Request.Form.Files[0];
-            string folderName = "Upload";
-            string pathToFolder = Path.Combine(_hostingEnvironment.WebRootPath, folderName);
+            var files = Request.Form.Files;
 
-            if (!Directory.Exists(pathToFolder))
+            if (!Directory.Exists(_pathToFolder))
             {
-                Directory.CreateDirectory(pathToFolder);
+                Directory.CreateDirectory(_pathToFolder);
             }
-
-            if (file.Length <= 0)
-                throw new IOException(string.Format("File length is equal 0. Cannot upload such a file."));
-            else
+            foreach (var file in files)
             {
-                string fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                string fullPathToFile = Path.Combine(pathToFolder, fileName);
-                using (var stream = new FileStream(fullPathToFile, FileMode.Create))
+                if (file.Length <= 0)
+                    throw new IOException(string.Format("File length is equal 0. Cannot upload such a file."));
+                else
                 {
-                    file.CopyTo(stream);
+                    string fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                    string fullPathToFile = Path.Combine(_pathToFolder, fileName);
+                    using (var stream = new FileStream(fullPathToFile, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
                 }
             }
+        }
+
+        [HttpDelete]
+        public ActionResult DeleteFile()
+        {
+            try
+            {
+                DeleteFileFromServer();
+                return Json("Deleting Successful!");
+            }
+            catch (Exception ex)
+            {
+                return Json("Deleting Failed: " + ex.Message);
+            }
+        }
+
+        private void DeleteFileFromServer()
+        {
+            var file = Request.Form.ToList();
+            string fileName = file[0].Value;
+            string fullPathToFile = Path.Combine(_pathToFolder, fileName);
+
+            if (!System.IO.File.Exists(fullPathToFile))
+                throw new IOException(string.Format("File " + fileName + " does not exist."));
+            else
+                System.IO.File.Delete(fullPathToFile);
         }
 
         [HttpGet("files")]
         public IEnumerable<string> GetFiles()
         {
-            string folderName = "Upload";
-            string pathToFolder = Path.Combine(_hostingEnvironment.WebRootPath, folderName);
-
             var filesNames = from file
-                 in Directory.EnumerateFiles(pathToFolder)
+                             in Directory.EnumerateFiles(_pathToFolder)
                              select Path.GetFileName(file);
 
-            if (!Directory.Exists(pathToFolder) || !(filesNames.Count() > 0))
+            if (!Directory.Exists(_pathToFolder) || !(filesNames.Count() > 0))
             {
                 return new string[] { "Nothing in here, sorry" };
             }
