@@ -37,6 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include=".paket\paket.exe" />
     <None Include="compilerconfig.json" />
   </ItemGroup>
 
