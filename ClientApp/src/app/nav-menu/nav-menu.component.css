@@ -1,13 +1,199 @@
-﻿.main-nav {
+﻿.line1 {
+  position: absolute;
+  height: 2px;
+  width: 175%;
+  top: -7%;
+  left: -50%;
+  background-color: black;
+  pointer-events: none;
+}
+@media (min-width: 329px) {
+  .line1 {
+    position: absolute;
+    height: 2px;
+    width: 205%;
+    top: -7%;
+    left: -80%;
+    background-color: black;
+    pointer-events: none;
+  }
+}
+@media (min-width: 576px) {
+  .line1 {
+    position: absolute;
+    height: 2px;
+    width: 215%;
+    top: -7%;
+    left: -90%;
+    background-color: black;
+    pointer-events: none;
+  }
+}
+@media (min-width: 768px) {
+  .line1 {
+    position: absolute;
+    height: 2px;
+    width: 225%;
+    top: -7%;
+    left: -100%;
+    background-color: black;
+    pointer-events: none;
+  }
+}
+@media (min-width: 992px) {
+  .line1 {
+    position: absolute;
+    height: 2px;
+    width: 235%;
+    top: -7%;
+    left: -110%;
+    background-color: black;
+    pointer-events: none;
+  }
+}
+@media (min-width: 1280px) {
+  .line1 {
+    position: absolute;
+    height: 2px;
+    width: 245%;
+    top: -7%;
+    left: -120%;
+    background-color: black;
+    pointer-events: none;
+  }
+}
+.line2 {
+  transform: rotate(90deg);
+  position: absolute;
+  height: 2px;
+  width: 115%;
+  top: 47%;
+  left: 56.6%;
+  background-color: black;
+  pointer-events: none;
+}
+.line3 {
+  position: absolute;
+  height: 2px;
+  width: 380%;
+  top: 100%;
+  left: 100%;
+  background-color: black;
+  pointer-events: none;
+}
+@media (min-width: 329px) {
+  .line3 {
+    position: absolute;
+    height: 2px;
+    width: 410%;
+    top: 100%;
+    left: 100%;
+    background-color: black;
+    pointer-events: none;
+  }
+}
+@media (min-width: 576px) {
+  .line3 {
+    position: absolute;
+    height: 2px;
+    width: 430%;
+    top: 100%;
+    left: 100%;
+    background-color: black;
+    pointer-events: none;
+  }
+}
+@media (min-width: 768px) {
+  .line3 {
+    position: absolute;
+    height: 2px;
+    width: 430%;
+    top: 100%;
+    left: 100%;
+    background-color: black;
+    pointer-events: none;
+  }
+}
+@media (min-width: 992px) {
+  .line3 {
+    position: absolute;
+    height: 2px;
+    width: 440%;
+    top: 100%;
+    left: 100%;
+    background-color: black;
+    pointer-events: none;
+  }
+}
+@media (min-width: 1280px) {
+  .line3 {
+    position: absolute;
+    height: 2px;
+    width: 500%;
+    top: 100%;
+    left: 100%;
+    background-color: black;
+    pointer-events: none;
+  }
+}
+.main-nav {
+  margin-top: 3.5rem;
   position: relative;
-  left: 0;
-  right: 0;
   z-index: 1;
 }
+.main-nav .navbar {
+  padding: 0;
+}
+.main-nav .navbar-page {
+  float: right;
+}
+.main-nav .navbar-page a {
+  color: #212121;
+  padding: 0;
+  text-align: right;
+  font-size: 2.5rem;
+}
+.main-nav .navbar-page a span {
+  color: #7200ca;
+}
+.main-nav .navbar-page a br {
+  line-height: 50%;
+}
+.main-nav .navbar-page.link-active a,
+.main-nav .navbar-page.link-active a:hover,
+.main-nav .navbar-page.link-active a:focus {
+  color: #212121;
+}
+.main-nav .navbar--space {
+  align-items: flex-end;
+  justify-content: space-between;
+}
+.main-nav ul {
+  display: flex;
+  list-style: none;
+}
+.main-nav ul li {
+  display: inline;
+}
+.main-nav li .a__first {
+  font-size: 4.5rem;
+  padding: 0.375rem 0;
+}
 .main-nav li a {
+  padding: 0.3125rem 0.5rem;
+  font-size: 1.2rem;
   cursor: pointer;
-  padding: 10px 16px;
   border-radius: 4px;
+  color: #212121;
+}
+@media (min-width: 351px) {
+  .main-nav li a {
+    padding: 0.3125rem 0.5rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius: 4px;
+    color: #212121;
+  }
 }
 .main-nav li .fa {
   margin-right: 10px;
@@ -15,6 +201,5 @@
 .main-nav li.link-active a,
 .main-nav li.link-active a:hover,
 .main-nav li.link-active a:focus {
-  background-color: #4189C7;
-  color: white;
+  color: #7200ca;
 }

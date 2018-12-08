@@ -1,15 +1,45 @@
 /* You can add global styles to this file, and also import other style files */
 // Extra small devices (portrait phones, less than 576px)
 // No media query since this is the default in Bootstrap
+@violet: #7200ca;
+@black: #212121;
+@pink: #ff66c4;
+
+* {
+  font-family: 'NowMedium';
+  font-weight: normal;
+  font-style: normal;
+}
 
 html {
-  font-size: 0.6rem;
+  font-size: 0.4rem;
+
+  .col-4 {
+    padding: 0 1.2rem;
+  }
+
+  .col-8 {
+    padding: 0 1.2rem;
+  }
+
+  a {
+    color: @violet;
+  }
+
+  a:hover {
+    color: @violet;
+  }
+
+  code {
+    color: @pink;
+  }
 }
+
 
 // Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) {
   html {
-    font-size: 0.7rem;
+    font-size: 0.6rem;
   }
 }
 

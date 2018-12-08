@@ -1,36 +1,47 @@
 <div class='main-nav'>
-  <nav class='navbar navbar-dark bg-dark d-flex flex-column'>
-    <div class="navbar-header p-0">
-      <a class='navbar-brand' [routerLink]='["/"]'>FileServer_website</a>
-      <button type='button' class='navbar-toggler' data-toggle='collapse' data-target='#navbarNav' [attr.aria-expanded]='isExpanded' (click)='toggle()'>
-        <span class='sr-only'>Toggle navigation</span>
-        <span class='navbar-toggler-icon'></span>
-      </button>
+  <div class="row">
+    <div class="col-4">
+      <div class="navbar navbar-page">
+        <a [routerLink]='["/"]' class="nav-link">
+          <div class="line1"></div>
+          <div class="line2"></div>
+          <div class="line3"></div>
+          <span>F</span>ILE<br />
+          <span>S</span>ERVER
+        </a>
+      </div>
     </div>
-    <div class='clearfix p-2'></div>
-    <div id="navbarNav" class='navbar-collapse collapse p-0' [ngClass]='{ "in": isExpanded }'>
-      <ul class='nav navbar-nav flex-column'>
-        <li class="nav-item" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
-          <a [routerLink]='["/"]' class="nav-link" (click)='collapse()'>
-            <span class='fas fa-home'></span> Home
-          </a>
-        </li>
-        <li class="nav-item" [routerLinkActive]='["link-active"]'>
-          <a [routerLink]='["/counter"]' class="nav-link" (click)='collapse()'>
-            <span class='fas fa-sort-amount-up'></span> Counter
-          </a>
-        </li>
-        <li class="nav-item" [routerLinkActive]='["link-active"]'>
-          <a [routerLink]='["/fetch-data"]' class="nav-link" (click)='collapse()'>
-            <span class='fas fa-database'></span> Fetch data
-          </a>
-        </li>
-        <li class="nav-item" [routerLinkActive]='["link-active"]'>
-          <a [routerLink]='["/upload-file"]' class="nav-link" (click)='collapse()'>
-            <span class='fas fa-file'></span> Upload file
-          </a>
-        </li>
-      </ul>
+    <div class="col-8">
+      <nav class='navbar navbar--space navbar-expand'>
+        <div class='navbar'>
+          <ul class='nav align-bottom'>
+            <li class="nav-item" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+              <a [routerLink]='["/"]' class="nav-link a__first">
+                FILES
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class='navbar'>
+          <ul class='nav align-bottom'>
+            <li class="nav-item" [routerLinkActive]='["link-active"]'>
+              <a [routerLink]='["/news"]' class="nav-link">
+                NEWS
+              </a>
+            </li>
+            <li class="nav-item" [routerLinkActive]='["link-active"]'>
+              <a [routerLink]='["/counter"]' class="nav-link">
+                ACCOUNT
+              </a>
+            </li>
+            <li class="nav-item" [routerLinkActive]='["link-active"]'>
+              <a [routerLink]='["/fetch-data"]' class="nav-link">
+                LOG IN
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
     </div>
-  </nav>
+  </div>
 </div>

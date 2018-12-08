@@ -27,10 +27,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: '', component: UploadFileComponent, pathMatch: 'full' },
+      { path: 'news', component: HomeComponent },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'upload-file', component: UploadFileComponent },
     ]),
     BrowserAnimationsModule,
     MatProgressSpinnerModule
