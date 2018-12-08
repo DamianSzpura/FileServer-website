@@ -1,14 +1,141 @@
+@violet: #7200ca;
+@black: #212121;
+@pink: #ff66c4;
+
+.line (@lenght: 20rem, @positionX: 0px, @positionY 0px) {
+  position: absolute;
+  height: 2px;
+  width: @lenght;
+  top: @positionY;
+  left: @positionX;
+  background-color: black;
+  pointer-events: none;
+}
+
+.line1 {
+  .line(175%, -50%, -7%);
+
+  @media (min-width: 329px) {
+    .line(205%, -80%, -7%);
+  }
+
+  @media (min-width: 576px) {
+    .line(215%, -90%, -7%);
+  }
+
+  @media (min-width: 768px) {
+    .line(225%, -100%, -7%);
+  }
+
+  @media (min-width: 992px) {
+    .line(235%, -110%, -7%);
+  }
+
+  @media (min-width: 1280px) {
+    .line(245%, -120%, -7%);
+  }
+}
+
+.line2 {
+  transform: rotate(90deg);
+  .line(115%, 56.6%, 47%);
+}
+
+
+.line3 {
+  .line(380%, 100%, 100%);
+
+  @media (min-width: 329px) {
+    .line(410%, 100%, 100%);
+  }
+
+  @media (min-width: 576px) {
+    .line(430%, 100%, 100%);
+  }
+
+  @media (min-width: 768px) {
+    .line(430%, 100%, 100%);
+  }
+
+  @media (min-width: 992px) {
+    .line(440%, 100%, 100%);
+  }
+
+  @media (min-width: 1280px) {
+    .line(500%, 100%, 100%);
+  }
+}
+
 .main-nav {
+  margin-top: 3.5rem;
   position: relative;
-  left: 0;
-  right: 0;
   z-index: 1;
 
-  li {
+  .navbar {
+    padding: 0;
+  }
+
+  .navbar-page {
+    float: right;
+
     a {
+      color: @black;
+      padding: 0;
+      text-align: right;
+      font-size: 2.5rem;
+
+      span {
+        color: @violet;
+      }
+
+      br {
+        line-height: 50%;
+      }
+    }
+
+    &.link-active a,
+    &.link-active a:hover,
+    &.link-active a:focus {
+      color: @black;
+    }
+  }
+
+  .navbar--space {
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  ul {
+    display: flex;
+    list-style: none;
+
+    li {
+      display: inline;
+    }
+  }
+
+  li {
+    .a__first {
+      font-size: 4.5rem;
+      padding: .375rem 0;
+    }
+
+    a {
+      padding: .3125rem .5rem;
+      font-size: 1.2rem;
       cursor: pointer;
-      padding: 10px 16px;
       border-radius: 4px;
+      color: @black;
+    }
+
+    @media (min-width: 351px) {
+      a {
+        padding: .3125rem .5rem;
+        font-size: 1.5rem;
+        cursor: pointer;
+        border-radius: 4px;
+        color: @black;
+      }
     }
 
     .fa {
@@ -18,8 +145,7 @@
     &.link-active a,
     &.link-active a:hover,
     &.link-active a:focus {
-      background-color: #4189C7;
-      color: white;
+      color: @violet;
     }
   }
 }

@@ -1,1 +1,1 @@
-﻿html{font-size:.6rem;}@media(min-width:576px){html{font-size:.7rem;}}@media(min-width:768px){html{font-size:.8rem;}}@media(min-width:992px){html{font-size:1rem;}}
+﻿*{font-family:'NowMedium';font-weight:normal;font-style:normal;}html{font-size:.4rem;}html .col-4{padding:0 1.2rem;}html .col-8{padding:0 1.2rem;}html a{color:#7200ca;}html a:hover{color:#7200ca;}html code{color:#ff66c4;}@media(min-width:576px){html{font-size:.6rem;}}@media(min-width:768px){html{font-size:.8rem;}}@media(min-width:992px){html{font-size:1rem;}}
