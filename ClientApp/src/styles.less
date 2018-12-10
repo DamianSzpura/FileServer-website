@@ -2,8 +2,10 @@
 // Extra small devices (portrait phones, less than 576px)
 // No media query since this is the default in Bootstrap
 @violet: #7200ca;
-@black: #212121;
 @pink: #ff66c4;
+@black: #212121;
+@grey: #484848;
+@white: #ffffff;
 
 * {
   font-family: 'NowMedium';
@@ -14,27 +16,28 @@
 html {
   font-size: 0.4rem;
 
-  .col-4 {
-    padding: 0 1.2rem;
-  }
+  body {
+    .col-4 {
+      padding: 0 1.2rem;
+    }
 
-  .col-8 {
-    padding: 0 1.2rem;
-  }
+    .col-8 {
+      padding: 0 1.2rem;
+    }
 
-  a {
-    color: @violet;
-  }
+    a {
+      color: @violet;
+    }
 
-  a:hover {
-    color: @violet;
-  }
+    a:hover {
+      color: @violet;
+    }
 
-  code {
-    color: @pink;
+    code {
+      color: @pink;
+    }
   }
 }
-
 
 // Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) {

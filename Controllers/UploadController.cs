@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using FileServer_website.Model;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -86,18 +87,18 @@ namespace FileServer_website.Controllers
         }
 
         [HttpGet("files")]
-        public IEnumerable<string> GetFiles()
+        public IEnumerable<WebsiteFile> GetFiles()
         {
-            var filesNames = from file
-                             in Directory.EnumerateFiles(_pathToFolder)
-                             select Path.GetFileName(file);
+            IEnumerable<WebsiteFile> files = from file
+                                             in Directory.EnumerateFiles(_pathToFolder)
+                                             select new WebsiteFile(Path.GetFileName(file), Path.GetExtension(file).ToUpper());
 
-            if (!Directory.Exists(_pathToFolder) || !(filesNames.Count() > 0))
+            if (!Directory.Exists(_pathToFolder) || !(files.Count() > 0))
             {
-                return new string[] { "Nothing in here, sorry" };
+                return new WebsiteFile[] { };
             }
 
-            return filesNames;
+            return files;
         }
     }
 }
