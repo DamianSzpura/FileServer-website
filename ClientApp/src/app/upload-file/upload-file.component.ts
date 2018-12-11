@@ -1,8 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { HttpClient, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
-import { element } from 'protractor';
-import { Element } from '@angular/compiler/src/render3/r3_ast';
-import { forEach } from '@angular/router/src/utils/collection';
+import { HttpClient, HttpRequest, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-upload-file',
@@ -12,14 +9,14 @@ import { forEach } from '@angular/router/src/utils/collection';
 export class UploadFileComponent {
   public progress: number;
   public message: string;
-  public files: Array<string>;
+  public files: Array<file>;
 
   constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<Array<string>>(baseUrl + 'api/Upload/files').subscribe(result => {
+    http.get<Array<file>>(baseUrl + 'api/Upload/files').subscribe(result => {
       this.files = result;
     }, error => console.error(error));
   }
-
+  /*
   showFooter(file) {
     var listOfAllFiles = document.getElementById(file).parentElement.parentElement.children;
     var footerOfFile;
@@ -48,7 +45,7 @@ export class UploadFileComponent {
         this.message = event.body.toString();
       }
     });
-  }
+  } */
 
   upload(files) {
     var bar = <HTMLElement>document.getElementById('prog-bar');
@@ -72,4 +69,9 @@ export class UploadFileComponent {
         this.message = event.body.toString();
     });
   }
+}
+
+interface file {
+  name: string;
+  extension: string;
 }

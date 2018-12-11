@@ -7,19 +7,19 @@
 html {
   font-size: 0.4rem;
 }
-html .col-4 {
+html body .col-4 {
   padding: 0 1.2rem;
 }
-html .col-8 {
+html body .col-8 {
   padding: 0 1.2rem;
 }
-html a {
+html body a {
   color: #7200ca;
 }
-html a:hover {
+html body a:hover {
   color: #7200ca;
 }
-html code {
+html body code {
   color: #ff66c4;
 }
 @media (min-width: 576px) {

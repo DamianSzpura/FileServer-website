@@ -1,5 +1,4 @@
 <h1>File Upload Using Angular 5 and ASP.NET Core 2.1</h1>
-
 <input #file type="file" multiple (change)="upload(file.files)" />
 <br />
 
@@ -16,17 +15,20 @@
 <div class="container">
   <div class="row justify-content-center no-gutters">
     <div class="col flex-grow-0" *ngFor="let file of files">
-      <div id="{{file}}" class="card card--box border-secondary" (click)="showFooter(file)">
-        <div class="card-header"><p>{{file}}</p></div>
-        <div class="card-body text-center">
-          <span class='far fa-file fa-3x'></span>
-        </div>
-        <div id="{{file}}" class="card-footer">
-          <button class="btn btn-danger" (click)="delete(file)">
-            DELETE
-          </button>
+      <div class="card__header"><p>{{file.name}}</p></div>
+      <div id="{{file.name}}" class="card card--box rounded-0">
+        <div class="card-body">
+          <div class="card__inside-box">
+            <p>{{file.extension}}</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<!--<div id="{{file}}" class="card-footer">
+  <button class="btn btn-danger" (click)="delete(file)">
+    DELETE
+  </button>
+</div> -->
