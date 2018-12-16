@@ -1,6 +1,91 @@
-﻿.card__header {
+﻿.upload-label {
+  color: white;
+  font-size: 2.5rem;
+  padding: 1rem 1rem 0rem 1rem;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+  -webkit-transform: perspective(1px) translateZ(0);
+  -moz-transform: perspective(1px) translateZ(0);
+  -ms-transform: perspective(1px) translateZ(0);
+  -o-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  -webkit-transition: 0.3s ease-out;
+  -moz-transition: 0.3s ease-out;
+  -o-transition: 0.3s ease-out;
+  transition: 0.3s ease-out;
+}
+.upload-label:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 51%;
+  right: 51%;
+  bottom: 0;
+  background: #ffffff;
+  height: 0.3rem;
+  -webkit-transition: 0.3s ease-out;
+  -moz-transition: 0.3s ease-out;
+  -o-transition: 0.3s ease-out;
+  transition: 0.3s ease-out;
+  transition-property: left, right;
+}
+.upload-label:focus,
+.upload-label:hover,
+.upload-label:active {
+  cursor: pointer;
+}
+.upload-label:focus:before,
+.upload-label:hover:before,
+.upload-label:active:before {
+  left: 0;
+  right: 0;
+}
+.upload__background--color {
+  background-color: #7200ca;
+}
+.upload__background--color .img--size {
+  display: block;
+  height: 100%;
+  padding: 3rem;
+}
+.upload__background--color .img--background {
+  background-image: url(https://media-public.canva.com/MAB5cOxZt-I/2/screen.png);
+  background-size: 30rem;
+  background-position: center;
+  background-repeat: repeat;
+  position: relative;
+  text-align: end;
+}
+.upload__background--color span {
+  font-weight: bold;
+  color: white;
+  position: absolute;
+  left: 3rem;
+  bottom: 1rem;
+}
+.upload__background--color .progress {
+  position: relative;
+  border-radius: 0;
+  background-color: transparent;
+  overflow: visible;
+}
+.upload__background--color .progress .progress--background {
+  display: flex;
+  height: 1rem;
+  width: 100%;
+  background-color: #212121;
+  position: absolute;
+  top: 0.6rem;
+  left: -1rem;
+}
+.upload__background--color .progress .progress-bar {
+  background-color: #ffffff;
+  z-index: 10;
+}
+.card__header {
   table-layout: fixed;
-  width: 9rem;
+  width: 6rem;
   margin: 1rem;
   margin-bottom: 0;
 }
@@ -12,17 +97,23 @@
   text-overflow: ellipsis;
 }
 .card--box {
-  width: 10rem;
-  height: 10rem;
+  width: 7rem;
+  height: 7rem;
   margin: 0.5rem;
   margin-top: 0;
   border-color: #212121;
   border-width: 0.4rem;
   padding: 0;
+  position: relative;
+  -webkit-transform: perspective(1px) translateZ(0);
+  -moz-transform: perspective(1px) translateZ(0);
+  -ms-transform: perspective(1px) translateZ(0);
+  -o-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
 }
 .card--box .card__inside-box {
-  width: 8.2rem;
-  height: 8.2rem;
+  width: 5.3rem;
+  height: 5.3rem;
   position: absolute;
   margin: auto;
   top: 0;
@@ -37,11 +128,36 @@
   position: absolute;
   text-align: center;
   padding-top: 100%;
-  font-size: 2.1rem;
+  font-size: 1.3rem;
   color: #ffffff;
   -webkit-transform: translateY(-50%);
   -moz-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   -o-transform: translateY(-50%);
   transform: translateY(-50%);
+}
+.card--box:before {
+  content: "";
+  position: absolute;
+  left: 51%;
+  right: 51%;
+  bottom: -0.4rem;
+  background: #7200ca;
+  height: 0.4rem;
+  -webkit-transition: 0.3s ease-out;
+  -moz-transition: 0.3s ease-out;
+  -o-transition: 0.3s ease-out;
+  transition: 0.3s ease-out;
+  transition-property: left, right;
+}
+.card--box:focus,
+.card--box:hover,
+.card--box:active {
+  cursor: pointer;
+}
+.card--box:focus:before,
+.card--box:hover:before,
+.card--box:active:before {
+  left: 0;
+  right: 0;
 }

@@ -1,20 +1,34 @@
-import { Component, Inject } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient, HttpRequest, HttpEventType } from '@angular/common/http';
+import { FileUploader } from 'ng2-file-upload';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-upload-file',
   templateUrl: './upload-file.component.html',
   styleUrls: ['./upload-file.component.css']
 })
-export class UploadFileComponent {
+export class UploadFileComponent implements OnInit {
   public progress: number;
   public message: string;
   public files: Array<file>;
+  public uploader: FileUploader;
 
   constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<Array<file>>(baseUrl + 'api/Upload/files').subscribe(result => {
+    this.uploader = new FileUploader({ url: 'api/Upload/files' });
+  }
+
+  ngOnInit() {
+    this.http.get<Array<file>>('api/Upload/files').subscribe(result => {
       this.files = result;
     }, error => console.error(error));
+  }
+
+  public hasBaseDropZoneOver: boolean = false;
+  public hasAnotherDropZoneOver: boolean = false;
+
+  public fileOverBase(e: any): void {
+    this.hasBaseDropZoneOver = e;
   }
   /*
   showFooter(file) {
@@ -49,7 +63,7 @@ export class UploadFileComponent {
 
   upload(files) {
     var bar = <HTMLElement>document.getElementById('prog-bar');
-    if (files.lenght === 0)
+    if (files.lenght === 0 || files.lenght == isNullOrUndefined)
       return;
 
     const formData = new FormData();
@@ -65,8 +79,10 @@ export class UploadFileComponent {
         this.message = 'Uploading... ' + this.progress + '%';
         bar.style.width = this.progress + '%';
       }
-      else if (event.type === HttpEventType.Response)
+      else if (event.type === HttpEventType.Response) {
         this.message = event.body.toString();
+        this.ngOnInit();
+      }
     });
   }
 }

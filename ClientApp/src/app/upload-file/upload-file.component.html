@@ -1,28 +1,59 @@
-<h1>File Upload Using Angular 5 and ASP.NET Core 2.1</h1>
-<input #file type="file" multiple (change)="upload(file.files)" />
-<br />
+<div class="upload__background--color">
+  <div class="img--size img--background justify-content-center">
+    <label for="uploader-input" class="upload-label"
+           ng2FileDrop
+           [ngClass]="{'another-file-over-class': hasAnotherDropZoneOver}"
+           (onFileDrop)="upload($event)"
+           [uploader]="uploader">
+      CLICK OR DRAG TO UPLOAD
+    </label>
+    <input #file type="file" multiple (change)="upload(file.files)" id="uploader-input" style="display:none"/>
+    <br />
+    <div class="progress" style="margin: 10px">
+      <div class="progress--background"></div>
+      <div id="prog-bar" class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 1%">
+        <span class="sr-only">{{progress}}%</span>
+      </div>
+    </div>
 
-<div class="progress" style="margin: 10px">
-  <div id="prog-bar" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
-    <span class="sr-only">{{progress}}%</span>
+    <span *ngIf="message">
+      {{message}}
+    </span>
   </div>
 </div>
 
-<span style="font-weight:bold;color:green;" *ngIf="message">
-  {{message}}
-</span>
-
 <div class="container">
-  <div class="row justify-content-center no-gutters">
-    <div class="col flex-grow-0" *ngFor="let file of files">
-      <div class="card__header"><p>{{file.name}}</p></div>
-      <div id="{{file.name}}" class="card card--box rounded-0">
-        <div class="card-body">
-          <div class="card__inside-box">
-            <p>{{file.extension}}</p>
+  <div class='row'>
+    <div class='col-4 justify-content-center'>
+    </div>
+    <div class='col-8'>
+      <div class="row justify-content-center no-gutters">
+        <div class="col flex-grow-0" *ngFor="let file of files">
+          <div class="card__header"><p>{{file.name}}</p></div>
+          <div id="{{file.name}}" class="card card--box rounded-0">
+            <div class="card-body">
+              <div class="card__inside-box">
+                <p>{{file.extension}}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<div>
+  <div class="wrapper">
+    <div class="container" dragula="DRAGULA_FACTS">
+      <div>You can move these elements between these two containers</div>
+      <div>Moving them anywhere else isn't quite possible</div>
+      <div>There's also the possibility of moving elements around in the same container, changing their position</div>
+    </div>
+    <div class="container" dragula="DRAGULA_FACTS">
+      <div>This is the default use case. You only need to specify the containers you want to use</div>
+      <div>More interactive use cases lie ahead</div>
+      <div>Make sure to check out the <a href="https://github.com/bevacqua/dragula#readme">documentation on GitHub!</a></div>
     </div>
   </div>
 </div>
