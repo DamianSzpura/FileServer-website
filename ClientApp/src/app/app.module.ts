@@ -12,6 +12,8 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { UploadFileComponent } from './upload-file/upload-file.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { DragulaModule } from 'ng2-dragula';
+import { FileUploadModule } from 'ng2-file-upload';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
       { path: 'fetch-data', component: FetchDataComponent },
     ]),
     BrowserAnimationsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    DragulaModule.forRoot(),
+    FileUploadModule
   ],
   providers: [],
   bootstrap: [AppComponent]

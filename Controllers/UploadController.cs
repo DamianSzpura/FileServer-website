@@ -90,7 +90,8 @@ namespace FileServer_website.Controllers
         public IEnumerable<WebsiteFile> GetFiles()
         {
             IEnumerable<WebsiteFile> files = from file
-                                             in Directory.EnumerateFiles(_pathToFolder)
+                                             in Directory.EnumerateFileSystemEntries(_pathToFolder)
+                                             orderby Path.GetExtension(file)
                                              select new WebsiteFile(Path.GetFileName(file), Path.GetExtension(file).ToUpper());
 
             if (!Directory.Exists(_pathToFolder) || !(files.Count() > 0))
