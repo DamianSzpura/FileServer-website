@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient, HttpRequest, HttpEventType } from '@angular/common/http';
 import { FileUploader } from 'ng2-file-upload';
 import { isNullOrUndefined } from 'util';
+import { ResponseContentType } from '@angular/http';
 
 @Component({
   selector: 'app-upload-file',
@@ -60,6 +61,23 @@ export class UploadFileComponent implements OnInit {
       }
     });
   } */
+
+  download(fileName) {
+    this.http.get<File>('api/Upload/file/' + fileName, { responseType: 'blob' as 'json'} ).subscribe(result => {
+      var blobFile = new Blob([result], { type: "application/octet-stream" });
+
+      var urlToFile = window.URL.createObjectURL(blobFile);
+      var documentToDownload = document.createElement('a');
+
+      documentToDownload.href = urlToFile;
+      documentToDownload.download = fileName;
+      documentToDownload.click();
+
+      window.URL.revokeObjectURL(urlToFile);
+      documentToDownload.remove();
+
+    }, error => console.error(error));
+  }
 
   upload(files) {
     var bar = <HTMLElement>document.getElementById('prog-bar');
