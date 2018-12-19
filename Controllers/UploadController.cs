@@ -90,7 +90,7 @@ namespace FileServer_website.Controllers
         public IEnumerable<WebsiteFile> GetFiles()
         {
             IEnumerable<WebsiteFile> files = from file
-                                             in Directory.EnumerateFileSystemEntries(_pathToFolder)
+                                              in Directory.EnumerateFileSystemEntries(_pathToFolder)
                                              orderby Path.GetExtension(file)
                                              select new WebsiteFile(Path.GetFileName(file), Path.GetExtension(file).ToUpper());
 
@@ -100,6 +100,21 @@ namespace FileServer_website.Controllers
             }
 
             return files;
+        }
+
+        [HttpGet("file/{fileName}")]
+        public ActionResult DownloadFiles(string fileName)
+        {
+            string fullPathToFile = Path.Combine(_pathToFolder, fileName);
+            try
+            {
+                var fileData = System.IO.File.ReadAllBytes(fullPathToFile);
+                return File(fileData, "application/octet-stream", fileName);
+            }
+            catch (Exception ex)
+            {
+                return Json("Downloading failed: " + ex.Message);
+            }
         }
     }
 }

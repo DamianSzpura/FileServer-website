@@ -30,7 +30,7 @@
       <div class="row justify-content-center no-gutters">
         <div class="col flex-grow-0" *ngFor="let file of files">
           <div class="card__header"><p>{{file.name}}</p></div>
-          <div id="{{file.name}}" class="card card--box rounded-0">
+          <div id="{{file.name}}" class="card card--box rounded-0" (click)="download(file.name)">
             <div class="card-body">
               <div class="card__inside-box">
                 <p>{{file.extension}}</p>
