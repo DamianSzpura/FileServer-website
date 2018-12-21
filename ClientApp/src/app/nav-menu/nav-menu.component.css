@@ -156,11 +156,18 @@
   -webkit-animation: aitf 80s linear infinite;
   -webkit-transform: translate3d(0, 0, 0);
   -webkit-backface-visibility: hidden;
-  transition: all 500ms cubic-bezier(0.75, -0.6, 0.625, 1.42);
+  -webkit-transition: all 0.5s cubic-bezier(0.75, -0.6, 0.625, 1.42);
+  -moz-transition: all 0.5s cubic-bezier(0.75, -0.6, 0.625, 1.42);
+  -o-transition: all 0.5s cubic-bezier(0.75, -0.6, 0.625, 1.42);
+  transition: all 0.5s cubic-bezier(0.75, -0.6, 0.625, 1.42);
 }
 .main-nav .navbar-page .nav-link p:hover,
 .main-nav .navbar-page .nav-link p:active,
 .main-nav .navbar-page .nav-link p:focus {
+  -webkit-transform: scale(1.15);
+  -moz-transform: scale(1.15);
+  -ms-transform: scale(1.15);
+  -o-transform: scale(1.15);
   transform: scale(1.15);
 }
 .main-nav .navbar-page a {
@@ -182,18 +189,68 @@
 .main-nav ul li {
   display: inline;
 }
+.main-nav ul li .nav-link--animate-with-line {
+  -webkit-transition: transform 0.3s ease-out;
+  -moz-transition: transform 0.3s ease-out;
+  -o-transition: transform 0.3s ease-out;
+  transition: transform 0.3s ease-out;
+}
+.main-nav ul li .nav-link--animate-with-line:hover {
+  -webkit-transform: translateY(-0.5rem);
+  -moz-transform: translateY(-0.5rem);
+  -ms-transform: translateY(-0.5rem);
+  -o-transform: translateY(-0.5rem);
+  transform: translateY(-0.5rem);
+}
+.main-nav ul li .nav-link--animate-with-line:before {
+  content: "";
+  position: absolute;
+  left: 51%;
+  right: 51%;
+  bottom: -0.2rem;
+  background: #7200ca;
+  height: 0.2rem;
+  -webkit-transition: 0.3s ease-out;
+  -moz-transition: 0.3s ease-out;
+  -o-transition: 0.3s ease-out;
+  transition: 0.3s ease-out;
+  transition-property: left, right;
+}
+.main-nav ul li .nav-link--animate-with-line:focus,
+.main-nav ul li .nav-link--animate-with-line:hover,
+.main-nav ul li .nav-link--animate-with-line:active {
+  cursor: pointer;
+}
+.main-nav ul li .nav-link--animate-with-line:hover:before {
+  left: 0;
+  right: 0;
+}
 .main-nav ul li .a__first {
   font-size: 4.5rem;
   padding: 0.375rem 0;
-  transition: transform 500ms cubic-bezier(0.75, -0.6, 0.625, 1.42);
+  -webkit-transition: transform 0.5s cubic-bezier(0.75, -0.6, 0.625, 1.42);
+  -moz-transition: transform 0.5s cubic-bezier(0.75, -0.6, 0.625, 1.42);
+  -o-transition: transform 0.5s cubic-bezier(0.75, -0.6, 0.625, 1.42);
+  transition: transform 0.5s cubic-bezier(0.75, -0.6, 0.625, 1.42);
 }
 .main-nav ul li .a__first:hover {
+  -webkit-transform: scale(1.15);
+  -moz-transform: scale(1.15);
+  -ms-transform: scale(1.15);
+  -o-transform: scale(1.15);
   transform: scale(1.15);
 }
 .main-nav ul li.link-active .a__first {
-  transition: transform 500ms cubic-bezier(0.75, -0.6, 0.625, 1.42);
+  -webkit-transition: transform 0.5s cubic-bezier(0.75, -0.6, 0.625, 1.42);
+  -moz-transition: transform 0.5s cubic-bezier(0.75, -0.6, 0.625, 1.42);
+  -o-transition: transform 0.5s cubic-bezier(0.75, -0.6, 0.625, 1.42);
+  transition: transform 0.5s cubic-bezier(0.75, -0.6, 0.625, 1.42);
 }
 .main-nav ul li.link-active .a__first:hover {
+  -webkit-transform: scale(1.15);
+  -moz-transform: scale(1.15);
+  -ms-transform: scale(1.15);
+  -o-transform: scale(1.15);
   transform: scale(1.15);
 }
 .main-nav ul li a {
@@ -201,15 +258,18 @@
   font-size: 1.2rem;
   cursor: pointer;
   border-radius: 4px;
-  color: #212121;
+  background: url(https://media-public.canva.com/MAB5cOxZt-I/2/screen.png) repeat-y;
+  background-color: #212121;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-animation: aitf 80s linear infinite;
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
 }
 @media (min-width: 351px) {
   .main-nav ul li a {
     padding: 0.3125rem 0.5rem;
     font-size: 1.5rem;
-    cursor: pointer;
-    border-radius: 4px;
-    color: #212121;
   }
 }
 .main-nav ul li .fa {
@@ -218,13 +278,7 @@
 .main-nav ul li.link-active a,
 .main-nav ul li.link-active a:hover,
 .main-nav ul li.link-active a:focus {
-  background: url(https://media-public.canva.com/MAB5cOxZt-I/2/screen.png) repeat-y;
   background-color: #7200ca;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -webkit-animation: aitf 80s linear infinite;
-  -webkit-transform: translate3d(0, 0, 0);
-  -webkit-backface-visibility: hidden;
 }
 @-webkit-keyframes aitf {
   0% {

@@ -63,19 +63,20 @@ export class UploadFileComponent implements OnInit {
   } */
 
   download(fileName) {
-    this.http.get<File>('api/Upload/file/' + fileName, { responseType: 'blob' as 'json'} ).subscribe(result => {
-      var blobFile = new Blob([result], { type: "application/octet-stream" });
+    this.http.get<File>('api/Upload/file/' + fileName, { responseType: 'blob' as 'json' }).subscribe(result => {
+      if (!result.type.endsWith("json")) {
+        var blobFile = new Blob([result], { type: "application/octet-stream" });
 
-      var urlToFile = window.URL.createObjectURL(blobFile);
-      var documentToDownload = document.createElement('a');
+        var urlToFile = window.URL.createObjectURL(blobFile);
+        var documentToDownload = document.createElement('a');
 
-      documentToDownload.href = urlToFile;
-      documentToDownload.download = fileName;
-      documentToDownload.click();
+        documentToDownload.href = urlToFile;
+        documentToDownload.download = fileName;
+        documentToDownload.click();
 
-      window.URL.revokeObjectURL(urlToFile);
-      documentToDownload.remove();
-
+        window.URL.revokeObjectURL(urlToFile);
+        documentToDownload.remove();
+      }
     }, error => console.error(error));
   }
 
