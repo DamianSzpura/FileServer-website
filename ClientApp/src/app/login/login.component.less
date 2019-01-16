@@ -31,6 +31,47 @@
   background-color: white;
   border: 1px solid rgba(0, 0, 0, 0.4);
 
+  label {
+    letter-spacing: 0.1rem;
+    font-size: 0.7rem;
+  }
+
+  .form-control {
+    border-radius: 0;
+    text-align: center;
+    .fullTransition(0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275));
+  }
+
+  .form-control:focus {
+    color: @violet;
+    background-color: #fff;
+    border-color: @violet;
+    outline: 0;
+    box-shadow: 0px 7px 25px -3px rgba(206,147,216,1);
+  }
+
+  .button {
+    background: url(https://media-public.canva.com/MAB5cKXAlps/2/screen.png) repeat-y;
+    background-size: 30rem;
+    background-position: center;
+    background-color: @black;
+    position: relative;
+    color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    width: 9rem;
+    .fullTransition(0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275));
+  }
+
+  .button:hover {
+    transform: scale(1.1);
+    background-color: @violet;
+  }
+
+  .button:focus {
+    box-shadow: 0px 0px 35px -3px rgba(206,147,216,1);
+  }
+
+
   hr {
     background-color: #212121 !important;
     color: #212121 !important;
@@ -63,12 +104,12 @@
         bottom: -0.2rem;
         background: @violet;
         height: 0.2rem;
-        .fullTransition(0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275););
+        .fullTransition(0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275));
         transition-property: left, right;
       }
 
       .form-box__link--animate-with-line:focus,
-      .form-box__linkk--animate-with-line:hover,
+      .form-box__link--animate-with-line:hover,
       .form-box__link--animate-with-line:active {
         cursor: pointer;
       }

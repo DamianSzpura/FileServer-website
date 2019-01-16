@@ -56,7 +56,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\app\register\" />
     <Folder Include="wwwroot\Upload\NewFolder\" />
   </ItemGroup>
 
