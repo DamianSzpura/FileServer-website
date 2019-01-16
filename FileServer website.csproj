@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
-    <TypeScriptToolsVersion>2.9</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
     <IsPackable>false</IsPackable>
     <SpaRoot>ClientApp\</SpaRoot>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
@@ -20,6 +20,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="BuildWebCompiler" Version="1.12.394" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="2.1.1" />
@@ -37,11 +39,38 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\_directives\alert.component.html" />
+    <None Remove="ClientApp\src\app\_directives\alert.component.ts" />
+    <None Remove="ClientApp\src\app\_guards\auth.guard.ts" />
+    <None Remove="ClientApp\src\app\_helpers\error.interceptor.ts" />
+    <None Remove="ClientApp\src\app\_helpers\fake-backend.ts" />
+    <None Remove="ClientApp\src\app\_helpers\jwt.interceptor.ts" />
+    <None Remove="ClientApp\src\app\_models\user.ts" />
+    <None Remove="ClientApp\src\app\_services\alert.service.ts" />
+    <None Remove="ClientApp\src\app\_services\authentication.service.ts" />
+    <None Remove="ClientApp\src\app\_services\user.service.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="compilerconfig.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ClientApp\src\app\register\" />
     <Folder Include="wwwroot\Upload\NewFolder\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\_directives\alert.component.html" />
+    <TypeScriptCompile Include="ClientApp\src\app\_directives\alert.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\_guards\auth.guard.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\_helpers\error.interceptor.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\_helpers\fake-backend.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\_helpers\jwt.interceptor.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\_models\user.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\_services\alert.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\_services\authentication.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\_services\user.service.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

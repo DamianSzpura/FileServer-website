@@ -31,8 +31,13 @@
   font-weight: normal;
   font-style: normal;
 }
+body {
+  padding-top: 2rem;
+  background-image: url("https://www.toptal.com/designers/subtlepatterns/patterns/topography.png");
+}
 html {
   font-size: 0.4rem;
+  overflow-y: scroll;
 }
 html body .col-4 {
   padding: 0 1.2rem;
@@ -41,10 +46,10 @@ html body .col-8 {
   padding: 0 1.2rem;
 }
 html body a {
-  color: #7200ca;
+  color: #ce93d8;
 }
 html body a:hover {
-  color: #7200ca;
+  color: #ce93d8;
 }
 html body code {
   color: #ff66c4;

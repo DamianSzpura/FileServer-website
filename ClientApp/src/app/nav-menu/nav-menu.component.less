@@ -1,4 +1,4 @@
-@violet: #7200ca;
+@violet: #ce93d8;
 @black: #212121;
 @pink: #ff66c4;
 
@@ -53,7 +53,7 @@
 
 .line2 {
   transform: rotate(90deg);
-  .line(115%, 56.6%, 47%);
+  .line(115%, 56.6%, 48%);
 }
 
 .line3 {
@@ -80,6 +80,12 @@
   }
 }
 
+hr {
+  background-color: #212121 !important;
+  color: #212121 !important;
+  border: solid 0px #212121 !important;
+  height: 0.2rem !important;
+}
 
 .main-nav {
   margin: 3.5rem 0rem;
@@ -96,14 +102,15 @@
     .nav-link {
       p {
         margin: 0rem;
-        background: url(https://media-public.canva.com/MAB5cOxZt-I/2/screen.png) repeat-y;
+        background: url(https://media-public.canva.com/MAB5cKXAlps/2/screen.png) repeat-y;
+        background-size: 30rem;
         background-color: @violet;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         -webkit-animation: aitf 80s linear infinite;
         -webkit-transform: translate3d(0,0,0);
         -webkit-backface-visibility: hidden;
-        .fullTransition(all 0.5s cubic-bezier(0.750, -0.600, 0.625, 1.420));
+        .fullTransition(all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275));
       }
 
       p:hover,
@@ -152,7 +159,7 @@
         bottom: -0.2rem;
         background: @violet;
         height: 0.2rem;
-        .fullTransition(0.3s ease-out);
+        .fullTransition(0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275););
         transition-property: left, right;
       }
 
@@ -170,7 +177,7 @@
       .a__first {
         font-size: 4.5rem;
         padding: .375rem 0;
-        .fullTransition(transform 0.5s cubic-bezier(0.750, -0.600, 0.625, 1.420));
+        .fullTransition(transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275));
       }
 
       .a__first:hover {
@@ -179,7 +186,7 @@
 
       &.link-active {
         .a__first {
-          .fullTransition(transform 0.5s cubic-bezier(0.750, -0.600, 0.625, 1.420));
+          .fullTransition(transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275));
         }
 
         .a__first:hover {
@@ -192,7 +199,8 @@
         font-size: 1.2rem;
         cursor: pointer;
         border-radius: 4px;
-        background: url(https://media-public.canva.com/MAB5cOxZt-I/2/screen.png) repeat-y;
+        background: url(https://media-public.canva.com/MAB5cKXAlps/2/screen.png) repeat-y;
+        background-size: 30rem;
         background-color: @black;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;

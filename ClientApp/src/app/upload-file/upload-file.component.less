@@ -1,4 +1,4 @@
-@violet: #7200ca;
+@violet: #ce93d8;
 @pink: #ff66c4;
 @black: #212121;
 @grey: #484848;
@@ -20,7 +20,7 @@
 }
 
 .upload-label {
-  color: white;
+  color: rgba(255,255,255, 0.7);
   font-size: 2.5rem;
   padding: 1rem 1rem 0rem 1rem;
   margin-bottom: 20px;
@@ -39,7 +39,7 @@
   bottom: 0;
   background: @white;
   height: 0.3rem;
-  .fullTransition(0.3s ease-out);
+  .fullTransition(0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275));
   transition-property: left, right;
 }
 
@@ -47,6 +47,7 @@
 .upload-label:hover,
 .upload-label:active {
   cursor: pointer;
+  color: @white;
 }
 
 .upload-label:focus:before,
@@ -57,19 +58,21 @@
 }
 
 .upload__background--color {
-  background-color: #7200ca;
-
   .img--size {
     display: block;
     height: 100%;
     padding: 3rem;
+    border: 1px solid rgba(0, 0, 0, 0.4);
   }
 
   .img--background {
-    background-image: url(https://media-public.canva.com/MAB5cOxZt-I/2/screen.png);
+    background: url(https://media-public.canva.com/MAB5cKXAlps/2/screen.png) repeat-y;
     background-size: 30rem;
-    background-position: center;
     background-repeat: repeat;
+    background-color: @violet;
+    -webkit-animation: right 80s linear infinite;
+    -webkit-transform: translate3d(0,0,0);
+    -webkit-backface-visibility: hidden;
     position: relative;
     text-align: end;
   }
@@ -92,14 +95,14 @@
       display: flex;
       height: 1rem;
       width: 100%;
-      background-color: @black;
+      background-color: rgba(0,0,0,0.7);
       position: absolute;
       top: 0.6rem;
       left: -1rem;
     }
 
     .progress-bar {
-      background-color: @white;
+      background-color: rgba(255,255,255,1);
       z-index: 10;
     }
   }
@@ -125,7 +128,7 @@
   height: 7rem;
   margin: 0.5rem;
   margin-top: 0;
-  border-color: @black;
+  border-color: rgba(0,0,0,0.7);
   border-width: 0.4rem;
   padding: 0;
   position: relative;
@@ -145,13 +148,18 @@
 
     p {
       width: 100%;
-      width: 100%;
       position: absolute;
       text-align: center;
       padding-top: 100%;
       font-size: 1.3rem;
       color: @white;
-      .fullTransform(translateY(-50%))
+      .fullTransform(translateY(-50%));
+    }
+
+    .fa-3x {
+      color: @white;
+      .fullTransform(translateY(-50%));
+      padding-top: 100%;
     }
   }
 }
@@ -162,9 +170,9 @@
   left: 51%;
   right: 51%;
   bottom: -0.4rem;
-  background: @violet;
+  background-color: @violet;
   height: 0.4rem;
-  .fullTransition(0.3s ease-out);
+  .fullTransition(0.2s ease-out);
   transition-property: left, right;
 }
 
@@ -179,4 +187,14 @@
 .card--box:active:before {
   left: 0;
   right: 0;
+}
+
+@-webkit-keyframes right {
+  0% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }

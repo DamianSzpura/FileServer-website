@@ -7,7 +7,7 @@
            [uploader]="uploader">
       CLICK OR DRAG TO UPLOAD
     </label>
-    <input #file type="file" multiple (change)="upload(file.files)" id="uploader-input" style="display:none"/>
+    <input #file type="file" multiple (change)="upload(file.files)" id="uploader-input" style="display:none" />
     <br />
     <div class="progress" style="margin: 10px">
       <div class="progress--background"></div>
@@ -22,7 +22,7 @@
   </div>
 </div>
 
-<div class="container">
+
   <div class='row'>
     <div class='col-4 justify-content-center'>
       <app-file-operation></app-file-operation>
@@ -35,6 +35,7 @@
             <div class="card-body">
               <div class="card__inside-box">
                 <p>{{file.extension}}</p>
+                <i *ngIf="!file.extension" class="far fa-folder fa-3x"></i>
               </div>
             </div>
           </div>
@@ -42,7 +43,7 @@
       </div>
     </div>
   </div>
-</div>
+
 
 <div>
   <div class="wrapper">
