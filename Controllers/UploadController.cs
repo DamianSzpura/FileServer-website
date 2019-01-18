@@ -87,18 +87,23 @@ namespace FileServer_website.Controllers
                 System.IO.File.Delete(fullPathToFile);
         }
 
-        [HttpGet("files/{path}")]
-        public IEnumerable<WebsiteFile> GetFiles(String path)
+        [HttpGet("files/{path}/{searchFor}")]
+        public IEnumerable<WebsiteFile> GetFiles(string path, string searchFor)
         {
-            String pathToFolder = editPath(path);
+            string pathToFolder = editPath(path);
 
             if (!Directory.Exists(pathToFolder))
             {
                 Directory.CreateDirectory(pathToFolder);
             }
 
+            var allFiles = Directory.GetFiles(pathToFolder, "*" + searchFor + "*");
+
+            if (searchFor == "-")
+                allFiles = Directory.GetFiles(pathToFolder);
+
             IEnumerable<WebsiteFile> files = from file
-                                             in Directory.EnumerateFileSystemEntries(pathToFolder)
+                                                in allFiles
                                              orderby Path.GetExtension(file)
                                              select new WebsiteFile(Path.GetFileName(file), Path.GetExtension(file).ToUpper());
 

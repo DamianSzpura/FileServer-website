@@ -66,7 +66,7 @@ const routes = [
     MatProgressSpinnerModule,
     DragulaModule.forRoot(),
     FileUploadModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [
     AuthGuard,

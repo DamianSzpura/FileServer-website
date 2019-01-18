@@ -5,6 +5,7 @@ import { isNullOrUndefined } from 'util';
 import { ResponseContentType } from '@angular/http';
 import { User } from '../_models/user';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-upload-file',
@@ -16,19 +17,26 @@ export class UploadFileComponent implements OnInit {
   public message: string;
   public files: Array<file>;
 
+  public selectedFile: file;
+
   private currentFolder: string[] = []
 
   public uploader: FileUploader;
+  searchForm: FormGroup;
 
   constructor(
     private http: HttpClient,
-    private router: Router) {
+    private router: Router,
+    private formBuilder: FormBuilder) {
     this.setMainFolder();
     this.uploader = new FileUploader({ url: 'api/server/files' });
+    this.searchForm = this.formBuilder.group({
+      search: ['']
+    });
   }
 
   ngOnInit() {
-    this.http.get<Array<file>>('api/server/files/' + this.currentFolder.join(">")).subscribe(result => {
+    this.http.get<Array<file>>('api/server/files/' + this.currentFolder.join(">") + "/-").subscribe(result => {
       this.files = result;
     }, error => console.error(error));
   }
@@ -53,17 +61,34 @@ export class UploadFileComponent implements OnInit {
 
     if (this.currentFolder.length > 1) { }
 
-    this.http.get<Array<file>>('api/server/files/' + this.currentFolder.join(">")).subscribe(result => {
+    this.http.get<Array<file>>('api/server/files/' + this.currentFolder.join(">") + "/-").subscribe(result => {
       this.files = result;
     }, error => console.error(error));
+    this.selectedFile = null;
+  }
+
+  onSearch() {
+    if (this.searchForm.controls.search.value != "") {
+      this.http.get<Array<file>>('api/server/files/' + this.currentFolder.join(">") + "/" + this.searchForm.controls.search.value).subscribe(result => {
+        this.files = result;
+      }, error => console.error(error));
+      this.selectedFile = null;
+    }
+    else {
+      this.http.get<Array<file>>('api/server/files/' + this.currentFolder.join(">") + "/-").subscribe(result => {
+        this.files = result;
+      }, error => console.error(error));
+      this.selectedFile = null;
+    }
   }
 
   closeFolder() {
     this.currentFolder.pop()
 
-    this.http.get<Array<file>>('api/server/files/' + this.currentFolder.join(">")).subscribe(result => {
+    this.http.get<Array<file>>('api/server/files/' + this.currentFolder.join(">") + "/-").subscribe(result => {
       this.files = result;
     }, error => console.error(error));
+    this.selectedFile = null;
   }
 
   download(fileName) {
@@ -108,30 +133,32 @@ export class UploadFileComponent implements OnInit {
       }
     });
   }
+
+  select(file) {
+    var listOfAllFiles = document.getElementById(file.name).parentElement.parentElement.parentElement.children;
+    var fileBorder;
+
+    var fileToSelect = document.getElementById(file.name);
+
+    for (var i = 0; i < listOfAllFiles.length; i++) {
+      fileBorder = listOfAllFiles[i].lastElementChild.lastElementChild;
+
+      if (fileBorder.classList.contains('card--selected'))
+        fileBorder.classList.remove('card--selected');
+    }
+
+    this.selectedFile = null;
+
+    fileToSelect.classList.add('card--selected');
+    this.selectedFile = file;
+  }
 }
 
 interface file {
   name: string;
   extension: string;
 }
-
- /*
-  showFooter(file) {
-    var listOfAllFiles = document.getElementById(file).parentElement.parentElement.children;
-    var footerOfFile;
-
-    var fileToEdit = document.getElementById(file).lastElementChild;
-
-    for (var i = 0; i < listOfAllFiles.length; i++) {
-      footerOfFile = listOfAllFiles[i].lastElementChild.lastElementChild;
-
-      if (!footerOfFile.classList.contains('card-footer--hidden'))
-        footerOfFile.classList.add('card-footer--hidden');
-    }
-
-    fileToEdit.classList.remove('card-footer--hidden');
-  }
-
+/*
   delete(file) {
     const formData = new FormData();
 

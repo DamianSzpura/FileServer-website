@@ -289,10 +289,10 @@ hr {
   background-color: #ce93d8;
 }
 @-webkit-keyframes aitf {
-  0% {
-    background-position: 0% 50%;
+  from {
+    background-position: 0 0;
   }
-  100% {
-    background-position: 100% 50%;
+  to {
+    background-position: 100% 0;
   }
 }
