@@ -1,6 +1,21 @@
-@violet: #7200ca;
+@violet: #ce93d8;
 @black: #212121;
 @pink: #ff66c4;
+
+.fullTransition(@transition) {
+  -webkit-transition: @transition;
+  -moz-transition: @transition;
+  -o-transition: @transition;
+  transition: @transition;
+}
+
+.fullTransform(@transform) {
+  -webkit-transform: @transform;
+  -moz-transform: @transform;
+  -ms-transform: @transform;
+  -o-transform: @transform;
+  transform: @transform;
+}
 
 .line (@lenght: 20rem, @positionX: 0px, @positionY 0px) {
   position: absolute;
@@ -38,7 +53,7 @@
 
 .line2 {
   transform: rotate(90deg);
-  .line(115%, 56.6%, 47%);
+  .line(115%, 56.6%, 48%);
 }
 
 .line3 {
@@ -65,6 +80,12 @@
   }
 }
 
+hr {
+  background-color: #212121 !important;
+  color: #212121 !important;
+  border: solid 0px #212121 !important;
+  height: 0.2rem !important;
+}
 
 .main-nav {
   margin: 3.5rem 0rem;
@@ -81,20 +102,21 @@
     .nav-link {
       p {
         margin: 0rem;
-        background: url(https://media-public.canva.com/MAB5cOxZt-I/2/screen.png) repeat-y;
+        background: url(https://media-public.canva.com/MAB5cKXAlps/2/screen.png) repeat-y;
+        background-size: 30rem;
         background-color: @violet;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         -webkit-animation: aitf 80s linear infinite;
         -webkit-transform: translate3d(0,0,0);
         -webkit-backface-visibility: hidden;
-        transition: all 500ms cubic-bezier(0.750, -0.600, 0.625, 1.420);
+        .fullTransition(all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275));
       }
 
       p:hover,
       p:active,
       p:focus {
-        transform: scale(1.15);
+        .fullTransform(scale(1.15));
       }
     }
 
@@ -121,23 +143,54 @@
     li {
       display: inline;
 
+      .nav-link--animate-with-line {
+        .fullTransition(transform 0.3s ease-out);
+      }
+
+      .nav-link--animate-with-line:hover {
+        .fullTransform(translateY(-0.5rem));
+      }
+
+      .nav-link--animate-with-line:before {
+        content: "";
+        position: absolute;
+        left: 51%;
+        right: 51%;
+        bottom: -0.2rem;
+        background: @violet;
+        height: 0.2rem;
+        .fullTransition(0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275););
+        transition-property: left, right;
+      }
+
+      .nav-link--animate-with-line:focus,
+      .nav-link--animate-with-line:hover,
+      .nav-link--animate-with-line:active {
+        cursor: pointer;
+      }
+
+      .nav-link--animate-with-line:hover:before {
+        left: 0;
+        right: 0;
+      }
+
       .a__first {
         font-size: 4.5rem;
         padding: .375rem 0;
-        transition: transform 500ms cubic-bezier(0.750, -0.600, 0.625, 1.420);
+        .fullTransition(transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275));
       }
 
       .a__first:hover {
-        transform: scale(1.15);
+        .fullTransform(scale(1.15));
       }
 
       &.link-active {
         .a__first {
-          transition: transform 500ms cubic-bezier(0.750, -0.600, 0.625, 1.420);
+          .fullTransition(transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275));
         }
 
         .a__first:hover {
-          transform: scale(1.15);
+          .fullTransform(scale(1.15));
         }
       }
 
@@ -146,16 +199,20 @@
         font-size: 1.2rem;
         cursor: pointer;
         border-radius: 4px;
-        color: @black;
+        background: url(https://media-public.canva.com/MAB5cKXAlps/2/screen.png) repeat-y;
+        background-size: 30rem;
+        background-color: @black;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -webkit-animation: aitf 80s linear infinite;
+        -webkit-transform: translate3d(0,0,0);
+        -webkit-backface-visibility: hidden;
       }
 
       @media (min-width: 351px) {
         a {
           padding: .3125rem .5rem;
           font-size: 1.5rem;
-          cursor: pointer;
-          border-radius: 4px;
-          color: @black;
         }
       }
 
@@ -167,13 +224,7 @@
         a,
         a:hover,
         a:focus {
-          background: url(https://media-public.canva.com/MAB5cOxZt-I/2/screen.png) repeat-y;
           background-color: @violet;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          -webkit-animation: aitf 80s linear infinite;
-          -webkit-transform: translate3d(0,0,0);
-          -webkit-backface-visibility: hidden;
         }
       }
     }
@@ -181,11 +232,11 @@
 }
 
 @-webkit-keyframes aitf {
-  0% {
-    background-position: 0% 50%;
+  from {
+    background-position: 0 0;
   }
 
-  100% {
-    background-position: 100% 50%;
+  to {
+    background-position: 100% 0;
   }
 }

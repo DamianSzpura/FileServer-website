@@ -7,7 +7,7 @@
            [uploader]="uploader">
       CLICK OR DRAG TO UPLOAD
     </label>
-    <input #file type="file" multiple (change)="upload(file.files)" id="uploader-input" style="display:none"/>
+    <input #file type="file" multiple (change)="upload(file.files)" id="uploader-input" style="display:none" />
     <br />
     <div class="progress" style="margin: 10px">
       <div class="progress--background"></div>
@@ -22,15 +22,37 @@
   </div>
 </div>
 
-<div class="container">
-  <div class='row'>
-    <div class='col-4 justify-content-center'>
-    </div>
-    <div class='col-8'>
-      <div class="row justify-content-center no-gutters">
-        <div class="col flex-grow-0" *ngFor="let file of files">
+<div class='row'>
+  <div class='col-4 justify-content-left'>
+    <app-file-operation [selectedFile]="selectedFile"></app-file-operation>
+  </div>
+  <div class='col-8'>
+    <form [formGroup]="searchForm" class="form-inline my-2 my-lg-0">
+      <div class="form-group">
+        <input type="text" formControlName="search" class="form-control mr-sm-2" placeholder="Search">
+      </div>
+
+      <div class="form-group">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit" (click)="onSearch()">Search</button>
+      </div>
+    </form>
+    <div class="row justify-content-center no-gutters">
+      <div *ngIf="currentFolder.length > 1" class="col flex-grow-0">
+        <div class="card__file">
+          <div class="card__header"><p>Return</p></div>
+          <div class="card card--box rounded-0" (dblclick)="closeFolder()">
+            <div class="card-body">
+              <div class="card__inside-box">
+                <i class="fas fa-undo fa-3x"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col flex-grow-0" *ngFor="let file of files">
+        <div *ngIf="file.extension; else noExtension" class="card__file">
           <div class="card__header"><p>{{file.name}}</p></div>
-          <div id="{{file.name}}" class="card card--box rounded-0" (click)="download(file.name)">
+          <div id="{{file.name}}" class="card card--box rounded-0" (click)="select(file)" (dblclick)="download(file.name)">
             <div class="card-body">
               <div class="card__inside-box">
                 <p>{{file.extension}}</p>
@@ -38,22 +60,18 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
 
-<div>
-  <div class="wrapper">
-    <div class="container" dragula="DRAGULA_FACTS">
-      <div>You can move these elements between these two containers</div>
-      <div>Moving them anywhere else isn't quite possible</div>
-      <div>There's also the possibility of moving elements around in the same container, changing their position</div>
-    </div>
-    <div class="container" dragula="DRAGULA_FACTS">
-      <div>This is the default use case. You only need to specify the containers you want to use</div>
-      <div>More interactive use cases lie ahead</div>
-      <div>Make sure to check out the <a href="https://github.com/bevacqua/dragula#readme">documentation on GitHub!</a></div>
+        <ng-template #noExtension>
+          <div class="card__header"><p>{{file.name}}</p></div>
+          <div id="{{file.name}}" class="card card--box rounded-0" (click)="select(file)" (dblclick)="openFolder(file.name)">
+            <div class="card-body">
+              <div class="card__inside-box">
+                <i class="far fa-folder fa-3x"></i>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </div>
     </div>
   </div>
 </div>

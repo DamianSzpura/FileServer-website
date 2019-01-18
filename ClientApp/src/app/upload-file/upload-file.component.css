@@ -1,5 +1,5 @@
 ﻿.upload-label {
-  color: white;
+  color: rgba(255, 255, 255, 0.7);
   font-size: 2.5rem;
   padding: 1rem 1rem 0rem 1rem;
   margin-bottom: 20px;
@@ -24,16 +24,17 @@
   bottom: 0;
   background: #ffffff;
   height: 0.3rem;
-  -webkit-transition: 0.3s ease-out;
-  -moz-transition: 0.3s ease-out;
-  -o-transition: 0.3s ease-out;
-  transition: 0.3s ease-out;
+  -webkit-transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  -moz-transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  -o-transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   transition-property: left, right;
 }
 .upload-label:focus,
 .upload-label:hover,
 .upload-label:active {
   cursor: pointer;
+  color: #ffffff;
 }
 .upload-label:focus:before,
 .upload-label:hover:before,
@@ -41,19 +42,20 @@
   left: 0;
   right: 0;
 }
-.upload__background--color {
-  background-color: #7200ca;
-}
 .upload__background--color .img--size {
   display: block;
   height: 100%;
   padding: 3rem;
+  border: 1px solid rgba(0, 0, 0, 0.4);
 }
 .upload__background--color .img--background {
-  background-image: url(https://media-public.canva.com/MAB5cOxZt-I/2/screen.png);
+  background: url(https://media-public.canva.com/MAB5cKXAlps/2/screen.png) repeat-y;
   background-size: 30rem;
-  background-position: center;
   background-repeat: repeat;
+  background-color: #ce93d8;
+  -webkit-animation: right 80s linear infinite;
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
   position: relative;
   text-align: end;
 }
@@ -74,7 +76,7 @@
   display: flex;
   height: 1rem;
   width: 100%;
-  background-color: #212121;
+  background-color: rgba(0, 0, 0, 0.7);
   position: absolute;
   top: 0.6rem;
   left: -1rem;
@@ -96,12 +98,19 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.card--box {
+.row {
+  min-height: 10rem;
+  padding-top: 3rem;
+}
+.row .card--selected {
+  border-color: #ce93d8 !important;
+}
+.row .card--box {
   width: 7rem;
   height: 7rem;
   margin: 0.5rem;
   margin-top: 0;
-  border-color: #212121;
+  border-color: rgba(0, 0, 0, 0.7);
   border-width: 0.4rem;
   padding: 0;
   position: relative;
@@ -110,8 +119,12 @@
   -ms-transform: perspective(1px) translateZ(0);
   -o-transform: perspective(1px) translateZ(0);
   transform: perspective(1px) translateZ(0);
+  -webkit-transition: 0.2s ease-out;
+  -moz-transition: 0.2s ease-out;
+  -o-transition: 0.2s ease-out;
+  transition: 0.2s ease-out;
 }
-.card--box .card__inside-box {
+.row .card--box .card__inside-box {
   width: 5.3rem;
   height: 5.3rem;
   position: absolute;
@@ -122,8 +135,9 @@
   left: 0;
   background-color: #484848;
   text-align: center;
+  overflow: hidden;
 }
-.card--box .card__inside-box p {
+.row .card--box .card__inside-box p {
   width: 100%;
   position: absolute;
   text-align: center;
@@ -136,28 +150,45 @@
   -o-transform: translateY(-50%);
   transform: translateY(-50%);
 }
-.card--box:before {
+.row .card--box .card__inside-box .fa-3x {
+  color: #ffffff;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+  padding-top: 100%;
+}
+.row .card--box:before {
   content: "";
   position: absolute;
   left: 51%;
   right: 51%;
   bottom: -0.4rem;
-  background: #7200ca;
+  background-color: #ce93d8;
   height: 0.4rem;
-  -webkit-transition: 0.3s ease-out;
-  -moz-transition: 0.3s ease-out;
-  -o-transition: 0.3s ease-out;
-  transition: 0.3s ease-out;
+  -webkit-transition: 0.2s ease-out;
+  -moz-transition: 0.2s ease-out;
+  -o-transition: 0.2s ease-out;
+  transition: 0.2s ease-out;
   transition-property: left, right;
 }
-.card--box:focus,
-.card--box:hover,
-.card--box:active {
+.row .card--box:focus,
+.row .card--box:hover,
+.row .card--box:active {
   cursor: pointer;
 }
-.card--box:focus:before,
-.card--box:hover:before,
-.card--box:active:before {
+.row .card--box:focus:before,
+.row .card--box:hover:before,
+.row .card--box:active:before {
   left: 0;
   right: 0;
+}
+@-webkit-keyframes right {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 0% 0;
+  }
 }

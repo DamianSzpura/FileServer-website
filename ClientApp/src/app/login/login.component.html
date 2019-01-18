@@ -1,0 +1,37 @@
+<div class="form-box__border">
+  <div class="form-box__background">
+    <div class="form-box">
+      <ul>
+        <li class="nav-item" [routerLinkActive]='["link-active"]'>
+          <a [routerLink]="['/login']" class="nav-link form-box__link--animate-with-line">LOGIN</a>
+        </li>
+        <li class="nav-item" [routerLinkActive]='["link-active"]'>
+          <a [routerLink]="['/register']" class="nav-link form-box__link--animate-with-line">REGISTER</a>
+        </li>
+      </ul> 
+      <hr>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="username">USERNAME</label>
+          <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+          <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+            <div *ngIf="f.username.errors.required">Username is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password">PASSWORD</label>
+          <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required">Password is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <button [disabled]="loading" class="btn button">Log me in!</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
