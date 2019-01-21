@@ -7,6 +7,8 @@ import { User } from '../_models/user';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
+import { PageFile } from '../_models/file';
+
 @Component({
   selector: 'app-upload-file',
   templateUrl: './upload-file.component.html',
@@ -15,9 +17,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class UploadFileComponent implements OnInit {
   public progress: number;
   public message: string;
-  public files: Array<file>;
+  public files: Array<PageFile>;
 
-  public selectedFile: file;
+  public selectedFile: PageFile;
 
   private currentFolder: string[] = []
 
@@ -36,7 +38,7 @@ export class UploadFileComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.get<Array<file>>('api/server/files/' + this.currentFolder.join(">") + "/-").subscribe(result => {
+    this.http.get<Array<PageFile>>('api/server/files/' + this.currentFolder.join(">") + "/-").subscribe(result => {
       this.files = result;
     }, error => console.error(error));
   }
@@ -61,7 +63,7 @@ export class UploadFileComponent implements OnInit {
 
     if (this.currentFolder.length > 1) { }
 
-    this.http.get<Array<file>>('api/server/files/' + this.currentFolder.join(">") + "/-").subscribe(result => {
+    this.http.get<Array<PageFile>>('api/server/files/' + this.currentFolder.join(">") + "/-").subscribe(result => {
       this.files = result;
     }, error => console.error(error));
     this.selectedFile = null;
@@ -69,13 +71,13 @@ export class UploadFileComponent implements OnInit {
 
   onSearch() {
     if (this.searchForm.controls.search.value != "") {
-      this.http.get<Array<file>>('api/server/files/' + this.currentFolder.join(">") + "/" + this.searchForm.controls.search.value).subscribe(result => {
+      this.http.get<Array<PageFile>>('api/server/files/' + this.currentFolder.join(">") + "/" + this.searchForm.controls.search.value).subscribe(result => {
         this.files = result;
       }, error => console.error(error));
       this.selectedFile = null;
     }
     else {
-      this.http.get<Array<file>>('api/server/files/' + this.currentFolder.join(">") + "/-").subscribe(result => {
+      this.http.get<Array<PageFile>>('api/server/files/' + this.currentFolder.join(">") + "/-").subscribe(result => {
         this.files = result;
       }, error => console.error(error));
       this.selectedFile = null;
@@ -85,7 +87,7 @@ export class UploadFileComponent implements OnInit {
   closeFolder() {
     this.currentFolder.pop()
 
-    this.http.get<Array<file>>('api/server/files/' + this.currentFolder.join(">") + "/-").subscribe(result => {
+    this.http.get<Array<PageFile>>('api/server/files/' + this.currentFolder.join(">") + "/-").subscribe(result => {
       this.files = result;
     }, error => console.error(error));
     this.selectedFile = null;
@@ -118,6 +120,8 @@ export class UploadFileComponent implements OnInit {
 
     for (let file of files)
       formData.append(file.name, file);
+
+    this.http.post('api/server/upload/' + this.currentFolder.join(">"), formData, { reportProgress: true, })
 
     const uploadReq = new HttpRequest('POST', 'api/server/upload/' + this.currentFolder.join(">"), formData, { reportProgress: true, });
 
@@ -154,10 +158,6 @@ export class UploadFileComponent implements OnInit {
   }
 }
 
-interface file {
-  name: string;
-  extension: string;
-}
 /*
   delete(file) {
     const formData = new FormData();

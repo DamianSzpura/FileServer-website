@@ -43,11 +43,12 @@
     <None Remove="ClientApp\src\app\_directives\alert.component.ts" />
     <None Remove="ClientApp\src\app\_guards\auth.guard.ts" />
     <None Remove="ClientApp\src\app\_helpers\error.interceptor.ts" />
-    <None Remove="ClientApp\src\app\_helpers\fake-backend.ts" />
     <None Remove="ClientApp\src\app\_helpers\jwt.interceptor.ts" />
+    <None Remove="ClientApp\src\app\_models\file.ts" />
     <None Remove="ClientApp\src\app\_models\user.ts" />
     <None Remove="ClientApp\src\app\_services\alert.service.ts" />
     <None Remove="ClientApp\src\app\_services\authentication.service.ts" />
+    <None Remove="ClientApp\src\app\_services\file.service.ts" />
     <None Remove="ClientApp\src\app\_services\user.service.ts" />
   </ItemGroup>
 
@@ -64,11 +65,12 @@
     <TypeScriptCompile Include="ClientApp\src\app\_directives\alert.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\_guards\auth.guard.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\_helpers\error.interceptor.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\_helpers\fake-backend.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\_helpers\jwt.interceptor.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\_models\file.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\_models\user.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\_services\alert.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\_services\authentication.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\_services\file.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\_services\user.service.ts" />
   </ItemGroup>
 
