@@ -1,3 +1,3 @@
-export class PageFile {
+export class WebFile {
 }
 //# sourceMappingURL=file.js.map

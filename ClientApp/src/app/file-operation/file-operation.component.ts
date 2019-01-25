@@ -1,16 +1,18 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { PageFile } from '../_models/file';
+import { WebFile } from '../_models/file';
 
 @Component({
   selector: 'app-file-operation',
   templateUrl: './file-operation.component.html',
-  styleUrls: ['./file-operation.component.css']
+  styleUrls: ['./file-operation.component.less']
 })
 export class FileOperationComponent implements OnInit {
-  @Input() selectedFile: PageFile
+  @Input() selectedFile: WebFile
 
-  constructor() { }
+  constructor() {
+
+  }
 
   ngOnInit() {
   }

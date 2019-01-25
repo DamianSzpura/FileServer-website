@@ -10,5 +10,6 @@ namespace FileServer_website.Helpers
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<WebFile> Files { get; set; }
     }
 }

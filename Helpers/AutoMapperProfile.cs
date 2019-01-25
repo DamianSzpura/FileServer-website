@@ -10,6 +10,9 @@ namespace FileServer_website.Helpers
         {
             CreateMap<User, UserDto>();
             CreateMap<UserDto, User>();
+
+            CreateMap<WebFile, WebFileDto>();
+            CreateMap<WebFileDto, WebFile>();
         }
     }
 }

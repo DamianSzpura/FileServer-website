@@ -1,11 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
-// Extra small devices (portrait phones, less than 576px)
-// No media query since this is the default in Bootstrap
-@violet: #ce93d8;
-@pink: #ff66c4;
-@black: #212121;
-@grey: #484848;
-@white: #ffffff;
+@import url('allVariables.less');
 
 /* in-flight clone */
 .gu-mirror {
@@ -35,10 +28,42 @@
   filter: alpha(opacity=20);
 }
 
+.ngx-contextmenu {
+  .dropdown-menu {
+    padding: 1rem 0;
+    margin: 0;
+  }
+
+  li {
+    text-align: center;
+  }
+
+  a {
+    color: rgba(0,0,0, 0.7);
+    font-size: 1rem;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none !important;
+    .fullTransform(perspective(1px) translateZ(0));
+    .fullTransition(0.3s ease-out);
+  }
+
+  a:focus,
+  a:hover,
+  a:active {
+    cursor: pointer;
+    color: @violet;
+  }
+}
+
 * {
   font-family: 'NowMedium';
   font-weight: normal;
   font-style: normal;
+}
+
+.fa, .far, .fas {
+  font-family: "Font Awesome 5 Free" !important;
 }
 
 html {

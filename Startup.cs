@@ -80,6 +80,7 @@ namespace FileServer_website
 
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IWebFileService, WebFileService>();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

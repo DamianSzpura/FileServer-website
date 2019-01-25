@@ -1,8 +1,5 @@
 @import url('../nav-menu/nav-menu.component.less');
-@violet: #ce93d8;
-
-
-
+@import url('../../allVariables.less');
 
 .form-box__border {
   width: 40rem;
@@ -14,7 +11,7 @@
 
   .form-box__background {
     padding: 2rem;
-    background: url(https://media-public.canva.com/MAB5cKXAlps/2/screen.png) repeat-y;
+    background: @backgroundUrlWaves;
     background-size: 30rem;
     background-repeat: repeat;
     background-color: @violet;
@@ -51,7 +48,7 @@
   }
 
   .button {
-    background: url(https://media-public.canva.com/MAB5cKXAlps/2/screen.png) repeat-y;
+    background: @backgroundUrlWaves;
     background-size: 30rem;
     background-position: center;
     background-color: @black;
@@ -70,7 +67,6 @@
   .button:focus {
     box-shadow: 0px 0px 35px -3px rgba(206,147,216,1);
   }
-
 
   hr {
     background-color: #212121 !important;
@@ -124,7 +120,7 @@
         font-size: 1.2rem;
         cursor: pointer;
         border-radius: 4px;
-        background: url(https://media-public.canva.com/MAB5cKXAlps/2/screen.png) repeat-y;
+        background: @backgroundUrlWaves;
         background-size: 30rem;
         background-color: @black;
         -webkit-background-clip: text;

@@ -59,6 +59,28 @@
   position: relative;
   text-align: end;
 }
+.upload__background--color .upload--file-over {
+  color: #ffffff;
+}
+.upload__background--color .upload--file-over:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 51%;
+  right: 51%;
+  bottom: 0;
+  background: #ffffff;
+  height: 0.3rem;
+  -webkit-transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  -moz-transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  -o-transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition-property: left, right;
+}
+.upload__background--color .upload--file-over:before {
+  left: 0;
+  right: 0;
+}
 .upload__background--color span {
   font-weight: bold;
   color: white;
@@ -98,9 +120,13 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.row--border {
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  margin-top: 0.5rem;
+}
 .row {
-  min-height: 10rem;
-  padding-top: 3rem;
+  min-height: 27.502rem;
+  padding: 2rem 0rem;
 }
 .row .card--selected {
   border-color: #ce93d8 !important;
