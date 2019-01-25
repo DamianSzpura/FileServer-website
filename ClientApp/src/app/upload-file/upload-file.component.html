@@ -2,22 +2,23 @@
   <div class="img--size img--background justify-content-center">
     <label for="uploader-input" class="upload-label"
            ng2FileDrop
-           [ngClass]="{'another-file-over-class': hasAnotherDropZoneOver}"
-           (onFileDrop)="upload($event)"
+           [ngClass]="{'upload--file-over': hasFileOver }"
+           (onFileDrop)="onUpload($event)"
+           (fileOver)="fileOver($event)"
            [uploader]="uploader">
       CLICK OR DRAG TO UPLOAD
     </label>
-    <input #file type="file" multiple (change)="upload(file.files)" id="uploader-input" style="display:none" />
+    <input #file type="file" multiple (change)="onUpload(file.files)" id="uploader-input" style="display:none" />
     <br />
     <div class="progress" style="margin: 10px">
       <div class="progress--background"></div>
       <div id="prog-bar" class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 1%">
-        <span class="sr-only">{{progress}}%</span>
+        <span class="sr-only">{{uploadProgress}}%</span>
       </div>
     </div>
 
     <span *ngIf="message">
-      {{message}}
+      {{uploadMessage}}
     </span>
   </div>
 </div>
@@ -27,20 +28,26 @@
     <app-file-operation [selectedFile]="selectedFile"></app-file-operation>
   </div>
   <div class='col-8'>
-    <form [formGroup]="searchForm" class="form-inline my-2 my-lg-0">
+    <form [formGroup]="searchForm" class="form-inline my-2 my-lg-0 justify-content-center">
       <div class="form-group">
         <input type="text" formControlName="search" class="form-control mr-sm-2" placeholder="Search">
       </div>
 
       <div class="form-group">
-        <button class="btn btn-secondary my-2 my-sm-0" type="submit" (click)="onSearch()">Search</button>
+        <button class="btn btn-secondary my-2 mr-sm-2 " type="submit" (click)="onSearch()">Search</button>
+      </div>
+
+      <div class="form-group" style="width: 100%;">
+        <fieldset disabled="" style="width: 100%;">
+          <input class="form-control" id="disabledPath" type="text" value="{{'Folder path: ./' + currentFolder.join('/')}}" placeholder="Folder path" disabled="" style="width: 100%;">
+        </fieldset>
       </div>
     </form>
-    <div class="row justify-content-center no-gutters">
+    <div class="row justify-content-center no-gutters row--border" [contextMenu]="addFolderMenu">
       <div *ngIf="currentFolder.length > 1" class="col flex-grow-0">
         <div class="card__file">
           <div class="card__header"><p>Return</p></div>
-          <div class="card card--box rounded-0" (dblclick)="closeFolder()">
+          <div class="card card--box rounded-0" (click)="onCloseFolder()">
             <div class="card-body">
               <div class="card__inside-box">
                 <i class="fas fa-undo fa-3x"></i>
@@ -52,7 +59,7 @@
       <div class="col flex-grow-0" *ngFor="let file of files">
         <div *ngIf="file.extension; else noExtension" class="card__file">
           <div class="card__header"><p>{{file.name}}</p></div>
-          <div id="{{file.name}}" class="card card--box rounded-0" (click)="select(file)" (dblclick)="download(file.name)">
+          <div id="{{file.name}}" class="card card--box rounded-0" (click)="onSelect(file)" (dblclick)="onDownload(file.name)">
             <div class="card-body">
               <div class="card__inside-box">
                 <p>{{file.extension}}</p>
@@ -63,7 +70,7 @@
 
         <ng-template #noExtension>
           <div class="card__header"><p>{{file.name}}</p></div>
-          <div id="{{file.name}}" class="card card--box rounded-0" (click)="select(file)" (dblclick)="openFolder(file.name)">
+          <div id="{{file.name}}" class="card card--box rounded-0" (click)="onSelect(file)" (dblclick)="onOpenFolder(file.name)">
             <div class="card-body">
               <div class="card__inside-box">
                 <i class="far fa-folder fa-3x"></i>
@@ -73,6 +80,12 @@
         </ng-template>
       </div>
     </div>
+
+    <context-menu>
+      <ng-template contextMenuItem (execute)="onAddFolder()">
+        <i class="far fa-folder" style="margin-right: 1rem;"></i>Add folder
+      </ng-template>
+    </context-menu>
   </div>
 </div>
 

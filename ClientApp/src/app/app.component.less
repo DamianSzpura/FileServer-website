@@ -1,3 +1,5 @@
+@import url('../allVariables.less');
+
 .body-content {
   padding: 0em 15px;
 }
@@ -11,7 +13,6 @@
   background-color: rgba(255,255,255,0.6);
   padding: 0 1rem 3.5rem 1rem;
   margin-bottom: 2rem;
-
 }
 
 .body__background--color {
@@ -25,11 +26,10 @@
   }
 
   .img--background {
-    background-image: url(https://media-public.canva.com/MAB5cOxZt-I/2/screen.png);
+    background-image: @backgroundUrl;
     background-size: 30rem;
     background-position: center;
     background-repeat: repeat;
     position: relative;
   }
 }
-

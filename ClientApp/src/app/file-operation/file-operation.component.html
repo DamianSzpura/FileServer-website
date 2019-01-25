@@ -1,3 +1,27 @@
-<p *ngIf="selectedFile">
-  {{selectedFile.name}}
-</p>
+<div *ngIf="selectedFile">
+  <div *ngIf="selectedFile.extension; else noExtension">
+    <p>
+      File: {{selectedFile.name}}
+    </p>
+    <p>
+      Extension: {{selectedFile.extension}}
+    </p>
+    <p>
+      Size: {{selectedFile.size.toFixed(2)}} kB
+    </p>
+  </div>
+
+  <ng-template #noExtension>
+    <p>
+      Directory: {{selectedFile.name}}
+    </p>
+  </ng-template>
+
+  <p>
+    Creation date: {{selectedFile.dateCreation | date}}
+  </p>
+  <p>
+    Comment: {{selectedFile.comment}}
+  </p>
+
+</div>

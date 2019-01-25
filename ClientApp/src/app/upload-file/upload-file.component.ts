@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { HttpClient, HttpRequest, HttpEventType } from '@angular/common/http';
 import { FileUploader } from 'ng2-file-upload';
 import { isNullOrUndefined } from 'util';
@@ -7,7 +7,10 @@ import { User } from '../_models/user';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { PageFile } from '../_models/file';
+import { WebFile } from '../_models/file';
+import { FileService } from '../_services/file.service';
+import { ContextMenuComponent } from 'ngx-contextmenu';
+import { AlertService } from '../_services/alert.service';
 
 @Component({
   selector: 'app-upload-file',
@@ -15,39 +18,42 @@ import { PageFile } from '../_models/file';
   styleUrls: ['./upload-file.component.css']
 })
 export class UploadFileComponent implements OnInit {
-  public progress: number;
-  public message: string;
-  public files: Array<PageFile>;
-
-  public selectedFile: PageFile;
-
-  private currentFolder: string[] = []
-
-  public uploader: FileUploader;
+  uploadMessage: string;
+  uploadProgress: number;
+  currentFolder: string[] = []
+  uploader: FileUploader;
   searchForm: FormGroup;
+  files: Array<WebFile>;
+  selectedFile: WebFile;
+
+  @ViewChild(ContextMenuComponent) public addFolderMenu: ContextMenuComponent;
+  currentUser: User;
 
   constructor(
-    private http: HttpClient,
     private router: Router,
-    private formBuilder: FormBuilder) {
-    this.setMainFolder();
-    this.uploader = new FileUploader({ url: 'api/server/files' });
+    private fileService: FileService,
+    private formBuilder: FormBuilder,
+    private alertService: AlertService) { }
+
+  ngOnInit() {
     this.searchForm = this.formBuilder.group({
       search: ['']
     });
+
+    this.setUpComponent();
   }
 
-  ngOnInit() {
-    this.http.get<Array<PageFile>>('api/server/files/' + this.currentFolder.join(">") + "/-").subscribe(result => {
-      this.files = result;
-    }, error => console.error(error));
+  public hasFileOver: boolean = false;
+
+  public fileOver(e: any): void {
+    this.hasFileOver = e;
   }
 
-  public hasBaseDropZoneOver: boolean = false;
-  public hasAnotherDropZoneOver: boolean = false;
-
-  public fileOverBase(e: any): void {
-    this.hasBaseDropZoneOver = e;
+  private setUpComponent() {
+    this.uploader = new FileUploader({ url: 'api/server/files' });
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.setMainFolder();
+    this.getFiles();
   }
 
   private setMainFolder() {
@@ -58,43 +64,53 @@ export class UploadFileComponent implements OnInit {
       this.router.navigate(["/login"]);
   }
 
-  openFolder(folderName) {
+  onOpenFolder(folderName) {
     this.currentFolder.push(folderName)
+    this.getFiles();
+  }
 
-    if (this.currentFolder.length > 1) { }
+  onCloseFolder() {
+    this.currentFolder.pop()
+    this.getFiles();
+  }
 
-    this.http.get<Array<PageFile>>('api/server/files/' + this.currentFolder.join(">") + "/-").subscribe(result => {
-      this.files = result;
-    }, error => console.error(error));
-    this.selectedFile = null;
+  onAddFolder() {
+    let fileInfo: WebFile = new WebFile;
+
+    fileInfo.name = "NewFolder";
+    fileInfo.path = this.currentFolder.join("/")
+    fileInfo.size = 0;
+    fileInfo.userId = this.currentUser.id;
+
+    this.fileService.addFolder(this.currentFolder, fileInfo)
+      .subscribe(event => {
+        if (event.type === HttpEventType.Response) {
+        this.alertService.success('Added new folder to ' + this.currentFolder.join("/"), true);
+        this.getFiles();
+      }
+      }, error => {
+        this.alertService.error(error);
+      });
   }
 
   onSearch() {
     if (this.searchForm.controls.search.value != "") {
-      this.http.get<Array<PageFile>>('api/server/files/' + this.currentFolder.join(">") + "/" + this.searchForm.controls.search.value).subscribe(result => {
+      this.fileService.getAllFromSearch(this.currentFolder, this.searchForm)
+        .subscribe(result => {
         this.files = result;
-      }, error => console.error(error));
+        }, error => {
+          this.alertService.error(error);
+        });
       this.selectedFile = null;
     }
     else {
-      this.http.get<Array<PageFile>>('api/server/files/' + this.currentFolder.join(">") + "/-").subscribe(result => {
-        this.files = result;
-      }, error => console.error(error));
-      this.selectedFile = null;
+      this.getFiles();
     }
   }
 
-  closeFolder() {
-    this.currentFolder.pop()
-
-    this.http.get<Array<PageFile>>('api/server/files/' + this.currentFolder.join(">") + "/-").subscribe(result => {
-      this.files = result;
-    }, error => console.error(error));
-    this.selectedFile = null;
-  }
-
-  download(fileName) {
-    this.http.get<File>('api/server/file/' + this.currentFolder.join(">") + "/" + fileName, { responseType: 'blob' as 'json' }).subscribe(result => {
+  onDownload(file) {
+    this.fileService.getByName(this.currentFolder, file)
+      .subscribe(result => {
       if (!result.type.endsWith("json")) {
         var blobFile = new Blob([result], { type: "application/octet-stream" });
 
@@ -102,59 +118,85 @@ export class UploadFileComponent implements OnInit {
         var documentToDownload = document.createElement('a');
 
         documentToDownload.href = urlToFile;
-        documentToDownload.download = fileName;
+        documentToDownload.download = file;
         documentToDownload.click();
 
         window.URL.revokeObjectURL(urlToFile);
         documentToDownload.remove();
       }
-    }, error => console.error(error));
+      }, error => {
+        this.alertService.error(error);
+      });
   }
 
-  upload(files) {
-    var bar = <HTMLElement>document.getElementById('prog-bar');
-    if (files.lenght === 0 || files.lenght == isNullOrUndefined)
+  onUpload(files: FileList) {
+    if (files.length === 0)
       return;
 
+    let fileInfoArray: WebFile[] = [];
+
     const formData = new FormData();
-
-    for (let file of files)
+    Array.from(files).forEach(file => {
       formData.append(file.name, file);
-
-    this.http.post('api/server/upload/' + this.currentFolder.join(">"), formData, { reportProgress: true, })
-
-    const uploadReq = new HttpRequest('POST', 'api/server/upload/' + this.currentFolder.join(">"), formData, { reportProgress: true, });
-
-    this.http.request(uploadReq).subscribe(event => {
-      if (event.type === HttpEventType.UploadProgress) {
-        this.progress = Math.round(100 * event.loaded / event.total);
-        this.message = 'Uploading... ' + this.progress + '%';
-        bar.style.width = this.progress + '%';
-      }
-      else if (event.type === HttpEventType.Response) {
-        this.message = event.body.toString();
-        this.ngOnInit();
-      }
+      let fileInfo: WebFile = new WebFile
+      fileInfo.name = file.name;
+      fileInfo.path = this.currentFolder.join("/")
+      fileInfo.size = file.size;
+      fileInfo.dateCreation = new Date(file.lastModified);
+      fileInfo.userId = this.currentUser.id;
+      fileInfoArray.push(fileInfo);
     });
+
+    var uploadBar = <HTMLElement>document.getElementById('prog-bar');
+
+    this.fileService.addToServer(this.currentFolder, formData)
+      .subscribe(
+        event => {
+          if (event.type === HttpEventType.UploadProgress) {
+            this.uploadProgress = Math.round(100 * event.loaded / event.total);
+            uploadBar.style.width = this.uploadProgress + '%';
+          }
+          else if (event.type === HttpEventType.Response) {
+            this.fileService.addToDb(this.currentFolder, fileInfoArray)
+              .subscribe(
+              data => {
+                this.alertService.success('Files added to ' + this.currentFolder.join("/"), true);
+                this.getFiles();
+                },
+              error => {
+                this.alertService.error(error);
+              });
+          }
+        }, error => {
+          this.alertService.error(error);
+        });
   }
 
-  select(file) {
-    var listOfAllFiles = document.getElementById(file.name).parentElement.parentElement.parentElement.children;
-    var fileBorder;
-
-    var fileToSelect = document.getElementById(file.name);
-
-    for (var i = 0; i < listOfAllFiles.length; i++) {
-      fileBorder = listOfAllFiles[i].lastElementChild.lastElementChild;
-
-      if (fileBorder.classList.contains('card--selected'))
-        fileBorder.classList.remove('card--selected');
-    }
-
+  onSelect(file: WebFile) {
     this.selectedFile = null;
 
+    var listOfAllFiles = document.getElementsByClassName('card--selected');
+    for (var i = 0; i < listOfAllFiles.length; i++) {
+      listOfAllFiles[i].classList.remove('card--selected');
+    }
+
+    var fileToSelect = document.getElementById(file.name);
     fileToSelect.classList.add('card--selected');
+
     this.selectedFile = file;
+  }
+
+  getFiles() {
+    this.fileService.getAllFromFolder(this.currentFolder)
+      .subscribe(result => {
+        this.files = result;
+        Array.from(this.files).forEach(file => {
+          file.size *= 0.0009765625;
+        });
+      }, error => {
+        this.alertService.error(error);
+      });
+    this.selectedFile = null;
   }
 }
 

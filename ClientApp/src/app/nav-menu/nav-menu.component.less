@@ -1,21 +1,4 @@
-@violet: #ce93d8;
-@black: #212121;
-@pink: #ff66c4;
-
-.fullTransition(@transition) {
-  -webkit-transition: @transition;
-  -moz-transition: @transition;
-  -o-transition: @transition;
-  transition: @transition;
-}
-
-.fullTransform(@transform) {
-  -webkit-transform: @transform;
-  -moz-transform: @transform;
-  -ms-transform: @transform;
-  -o-transform: @transform;
-  transform: @transform;
-}
+@import url('../../allVariables.less');
 
 .line (@lenght: 20rem, @positionX: 0px, @positionY 0px) {
   position: absolute;
@@ -25,59 +8,11 @@
   left: @positionX;
   background-color: black;
   pointer-events: none;
-} 
-
-.line1 {
-  .line(175%, -50%, -7%);
-
-  @media (min-width: 329px) {
-    .line(205%, -80%, -7%);
-  }
-
-  @media (min-width: 576px) {
-    .line(215%, -90%, -7%);
-  }
-
-  @media (min-width: 768px) {
-    .line(225%, -100%, -7%);
-  }
-
-  @media (min-width: 992px) {
-    .line(235%, -110%, -7%);
-  }
-
-  @media (min-width: 1280px) {
-    .line(245%, -120%, -7%);
-  }
 }
 
 .line2 {
   transform: rotate(90deg);
   .line(115%, 56.6%, 48%);
-}
-
-.line3 {
-  .line(380%, 100%, 100%);
-
-  @media (min-width: 329px) {
-    .line(410%, 100%, 100%);
-  }
-
-  @media (min-width: 576px) {
-    .line(430%, 100%, 100%);
-  }
-
-  @media (min-width: 768px) {
-    .line(430%, 100%, 100%);
-  }
-
-  @media (min-width: 992px) {
-    .line(440%, 100%, 100%);
-  }
-
-  @media (min-width: 1280px) {
-    .line(500%, 100%, 100%);
-  }
 }
 
 hr {
@@ -102,7 +37,7 @@ hr {
     .nav-link {
       p {
         margin: 0rem;
-        background: url(https://media-public.canva.com/MAB5cKXAlps/2/screen.png) repeat-y;
+        background: @backgroundUrlWaves;
         background-size: 30rem;
         background-color: @violet;
         -webkit-background-clip: text;
@@ -199,7 +134,7 @@ hr {
         font-size: 1.2rem;
         cursor: pointer;
         border-radius: 4px;
-        background: url(https://media-public.canva.com/MAB5cKXAlps/2/screen.png) repeat-y;
+        background: @backgroundUrlWaves;
         background-size: 30rem;
         background-color: @black;
         -webkit-background-clip: text;

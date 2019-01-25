@@ -39,6 +39,41 @@ namespace FileServer_website.Migrations
 
                     b.ToTable("Users");
                 });
+
+            modelBuilder.Entity("FileServer_website.Entities.WebFile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Comment");
+
+                    b.Property<DateTime>("DateCreation");
+
+                    b.Property<string>("Extension");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Path");
+
+                    b.Property<long>("Size");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Files");
+                });
+
+            modelBuilder.Entity("FileServer_website.Entities.WebFile", b =>
+                {
+                    b.HasOne("FileServer_website.Entities.User", "User")
+                        .WithMany("WebFiles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
 #pragma warning restore 612, 618
         }
     }

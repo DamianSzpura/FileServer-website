@@ -14,7 +14,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^6.1.10",
-    "@angular/cdk": "^7.0.4",
+    "@angular/cdk": "^7.2.2",
     "@angular/common": "^6.1.8",
     "@angular/compiler": "^6.1.8",
     "@angular/core": "^6.1.8",
@@ -35,6 +35,7 @@
     "ng-file-upload": "^12.2.13",
     "ng2-dragula": "^2.1.1",
     "ng2-file-upload": "^1.3.0",
+    "ngx-contextmenu": "^5.1.1",
     "popper.js": "^1.14.4",
     "rxjs": "^6.3.2",
     "zone.js": "^0.8.26"

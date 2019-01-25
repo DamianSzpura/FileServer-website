@@ -1,0 +1,24 @@
+@violet: #ce93d8;
+@pink: #ff66c4;
+@black: #212121;
+@grey: #484848;
+@white: #ffffff;
+
+@backgroundUrl: url(https://media-public.canva.com/MAB5cOxZt-I/2/screen.png);
+
+@backgroundUrlWaves: url(https://media-public.canva.com/MAB5cKXAlps/2/screen.png) repeat-y;
+
+.fullTransition(@transition) {
+  -webkit-transition: @transition;
+  -moz-transition: @transition;
+  -o-transition: @transition;
+  transition: @transition;
+}
+
+.fullTransform(@transform) {
+  -webkit-transform: @transform;
+  -moz-transform: @transform;
+  -ms-transform: @transform;
+  -o-transform: @transform;
+  transform: @transform;
+}

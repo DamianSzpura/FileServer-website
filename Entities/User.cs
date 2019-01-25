@@ -1,4 +1,6 @@
-﻿namespace FileServer_website.Entities
+﻿using System.Collections.Generic;
+
+namespace FileServer_website.Entities
 {
     public class User
     {
@@ -8,5 +10,7 @@
         public string Username { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
+
+        public List<WebFile> WebFiles { get; set; }
     }
 }
