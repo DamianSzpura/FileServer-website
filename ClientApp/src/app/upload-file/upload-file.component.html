@@ -24,17 +24,13 @@
 </div>
 
 <div class='row'>
-  <div class='col-4 justify-content-left'>
-    <app-file-operation [selectedFile]="selectedFile"></app-file-operation>
+  <div class='col-4 justify-content-left' *ngIf="selectedFile" [@enterAnimation]>
+    <app-file-operation [selectedFile]="selectedFile" [currentFolder]="currentFolder" (selectedFileChanged)="getFiles()">></app-file-operation>
   </div>
-  <div class='col-8'>
-    <form [formGroup]="searchForm" class="form-inline my-2 my-lg-0 justify-content-center">
+  <div class='col'>
+    <form [formGroup]="searchForm" class="form-inline my-2 mb-sm-2 justify-content-center">
       <div class="form-group">
-        <input type="text" formControlName="search" class="form-control mr-sm-2" placeholder="Search">
-      </div>
-
-      <div class="form-group">
-        <button class="btn btn-secondary my-2 mr-sm-2 " type="submit" (click)="onSearch()">Search</button>
+        <input type="text" formControlName="search" class="form-control mb-sm-2" placeholder="Search" style="width: 25rem;">
       </div>
 
       <div class="form-group" style="width: 100%;">
@@ -43,8 +39,8 @@
         </fieldset>
       </div>
     </form>
-    <div class="row justify-content-center no-gutters row--border" [contextMenu]="addFolderMenu">
-      <div *ngIf="currentFolder.length > 1" class="col flex-grow-0">
+    <div class="row no-gutters row--border" [contextMenu]="fileMenu">
+      <div *ngIf="currentFolder.length > 1" [@enterAnimation] class="col flex-grow-0">
         <div class="card__file">
           <div class="card__header"><p>Return</p></div>
           <div class="card card--box rounded-0" (click)="onCloseFolder()">
@@ -56,10 +52,10 @@
           </div>
         </div>
       </div>
-      <div class="col flex-grow-0" *ngFor="let file of files">
+      <div class="col flex-grow-0" *ngFor="let file of files" [@enterAnimation]>
         <div *ngIf="file.extension; else noExtension" class="card__file">
           <div class="card__header"><p>{{file.name}}</p></div>
-          <div id="{{file.name}}" class="card card--box rounded-0" (click)="onSelect(file)" (dblclick)="onDownload(file.name)">
+          <div id="{{file.name}}" class="card card--box rounded-0" (click)="onSelect(file)">
             <div class="card-body">
               <div class="card__inside-box">
                 <p>{{file.extension}}</p>
@@ -81,10 +77,23 @@
       </div>
     </div>
 
-    <context-menu>
+    <context-menu #fileMenu>
       <ng-template contextMenuItem (execute)="onAddFolder()">
-        <i class="far fa-folder" style="margin-right: 1rem;"></i>Add folder
+        <i class="far fa-folder"></i>Add folder
       </ng-template>
+      <ng-template *ngIf="selectedFile" contextMenuItem [passive]="true"><hr></ng-template>
+      <ng-template *ngIf="selectedFile" contextMenuItem [subMenu]="directoriesSubMenu">
+        <i class="far fa-folder-open"></i>Change directory
+      </ng-template>
+      <context-menu #directoriesSubMenu>
+        <ng-template contextMenuItem *ngIf="getDirectories()" [passive]="true">
+          To:
+        </ng-template>
+
+        <ng-template contextMenuItem *ngFor="let directory of getDirectories()" (execute)="onChangeFolder(directory)">
+          {{directory.name}}
+        </ng-template>
+      </context-menu>
     </context-menu>
   </div>
 </div>

@@ -11,11 +11,26 @@ import { WebFile } from '../_models/file';
 import { FileService } from '../_services/file.service';
 import { ContextMenuComponent } from 'ngx-contextmenu';
 import { AlertService } from '../_services/alert.service';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-upload-file',
   templateUrl: './upload-file.component.html',
-  styleUrls: ['./upload-file.component.css']
+  styleUrls: ['./upload-file.component.css'],
+  animations: [
+    trigger(
+      'enterAnimation', [
+        transition(':enter', [
+          style({ transform: 'translateX(-2rem)', opacity: 0 }),
+          animate('300ms ease-out', style({ transform: 'translateX(0)', opacity: 1 }))
+        ]),
+        transition(':leave', [
+          style({ transform: 'translateX(0)', opacity: 1 }),
+          animate('100ms ease-out', style({ transform: 'translateX(-2rem)', opacity: 0 }))
+        ])
+      ]
+    )
+  ],
 })
 export class UploadFileComponent implements OnInit {
   uploadMessage: string;
@@ -26,7 +41,8 @@ export class UploadFileComponent implements OnInit {
   files: Array<WebFile>;
   selectedFile: WebFile;
 
-  @ViewChild(ContextMenuComponent) public addFolderMenu: ContextMenuComponent;
+  @ViewChild('fileMenu') public addFolderMenu: ContextMenuComponent;
+
   currentUser: User;
 
   constructor(
@@ -38,6 +54,10 @@ export class UploadFileComponent implements OnInit {
   ngOnInit() {
     this.searchForm = this.formBuilder.group({
       search: ['']
+    });
+
+    this.searchForm.controls['search'].valueChanges.subscribe(value => {
+      this.onSearch();
     });
 
     this.setUpComponent();
@@ -67,11 +87,13 @@ export class UploadFileComponent implements OnInit {
   onOpenFolder(folderName) {
     this.currentFolder.push(folderName)
     this.getFiles();
+    this.selectedFile = null;
   }
 
   onCloseFolder() {
     this.currentFolder.pop()
     this.getFiles();
+    this.selectedFile = null;
   }
 
   onAddFolder() {
@@ -85,9 +107,9 @@ export class UploadFileComponent implements OnInit {
     this.fileService.addFolder(this.currentFolder, fileInfo)
       .subscribe(event => {
         if (event.type === HttpEventType.Response) {
-        this.alertService.success('Added new folder to ' + this.currentFolder.join("/"), true);
-        this.getFiles();
-      }
+          this.alertService.success('Added new folder to ' + this.currentFolder.join("/"), true);
+          this.getFiles();
+        }
       }, error => {
         this.alertService.error(error);
       });
@@ -97,7 +119,7 @@ export class UploadFileComponent implements OnInit {
     if (this.searchForm.controls.search.value != "") {
       this.fileService.getAllFromSearch(this.currentFolder, this.searchForm)
         .subscribe(result => {
-        this.files = result;
+          this.files = result;
         }, error => {
           this.alertService.error(error);
         });
@@ -106,27 +128,6 @@ export class UploadFileComponent implements OnInit {
     else {
       this.getFiles();
     }
-  }
-
-  onDownload(file) {
-    this.fileService.getByName(this.currentFolder, file)
-      .subscribe(result => {
-      if (!result.type.endsWith("json")) {
-        var blobFile = new Blob([result], { type: "application/octet-stream" });
-
-        var urlToFile = window.URL.createObjectURL(blobFile);
-        var documentToDownload = document.createElement('a');
-
-        documentToDownload.href = urlToFile;
-        documentToDownload.download = file;
-        documentToDownload.click();
-
-        window.URL.revokeObjectURL(urlToFile);
-        documentToDownload.remove();
-      }
-      }, error => {
-        this.alertService.error(error);
-      });
   }
 
   onUpload(files: FileList) {
@@ -159,17 +160,30 @@ export class UploadFileComponent implements OnInit {
           else if (event.type === HttpEventType.Response) {
             this.fileService.addToDb(this.currentFolder, fileInfoArray)
               .subscribe(
-              data => {
-                this.alertService.success('Files added to ' + this.currentFolder.join("/"), true);
-                this.getFiles();
+                data => {
+                  this.alertService.success('Files added to ' + this.currentFolder.join("/"), true);
+                  this.getFiles();
                 },
-              error => {
-                this.alertService.error(error);
-              });
+                error => {
+                  this.alertService.error(error);
+                });
           }
         }, error => {
           this.alertService.error(error);
         });
+  }
+
+  onChangeFolder(toDirectory: WebFile) {
+    var fileToChange = this.selectedFile;
+    fileToChange.path = toDirectory.path + "\\" + toDirectory.name;
+    this.fileService.update(this.currentFolder, fileToChange).subscribe(
+      event => {
+        this.getFiles();
+        this.alertService.success("File moved.");
+        this.selectedFile = null;
+      }, error => {
+        this.alertService.error(error);
+      });
   }
 
   onSelect(file: WebFile) {
@@ -187,6 +201,7 @@ export class UploadFileComponent implements OnInit {
   }
 
   getFiles() {
+    this.files = null
     this.fileService.getAllFromFolder(this.currentFolder)
       .subscribe(result => {
         this.files = result;
@@ -196,7 +211,13 @@ export class UploadFileComponent implements OnInit {
       }, error => {
         this.alertService.error(error);
       });
-    this.selectedFile = null;
+  }
+
+  getDirectories() {
+    if (this.selectedFile)
+      return this.files.filter(x => !x.extension && x.name != this.selectedFile.name);
+    else
+      return null;
   }
 }
 
