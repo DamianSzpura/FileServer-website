@@ -26,17 +26,26 @@
   filter: alpha(opacity=20);
 }
 .ngx-contextmenu .dropdown-menu {
-  padding: 1rem 0;
+  padding: 1rem 1rem;
   margin: 0;
+  max-width: 20rem;
 }
 .ngx-contextmenu li {
-  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ngx-contextmenu i {
+  margin-right: 1rem;
+}
+.ngx-contextmenu hr {
+  margin-top: 0.7rem;
 }
 .ngx-contextmenu a {
+  margin: 0 1rem;
   color: rgba(0, 0, 0, 0.7);
   font-size: 1rem;
   position: relative;
-  overflow: hidden;
   text-decoration: none !important;
   -webkit-transform: perspective(1px) translateZ(0);
   -moz-transform: perspective(1px) translateZ(0);

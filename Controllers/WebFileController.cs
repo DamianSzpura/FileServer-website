@@ -109,6 +109,38 @@ namespace FileServer_website.Controllers
             }
         }
 
+        [HttpPut("change/{path}")]
+        public IActionResult ChangeFile(string path, [FromBody]WebFileDto fileDto)
+        {
+            var fileInfo = _mapper.Map<WebFile>(fileDto);
+
+            try
+            {
+                _webFileService.ChangeFile(editPath(path), fileInfo);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpPatch("delete/{path}")]
+        public IActionResult DeleteFile(string path, [FromBody]WebFileDto fileDto)
+        {
+            var fileInfo = _mapper.Map<WebFile>(fileDto);
+
+            try
+            {
+                _webFileService.DeleteFile(editPath(path), fileInfo);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
         /* [HttpGet("file/{path}/{fileName}/download")]
          public IActionResult GetInfoByName(string path, string fileName)
          {
@@ -149,13 +181,5 @@ namespace FileServer_website.Controllers
 
    private void DeleteFileFromServer()
    {
-       var file = Request.Form.ToList();
-       string fileName = file[0].Value;
-       string fullPathToFile = Path.Combine(_pathToFolder, fileName);
-
-       if (!System.IO.File.Exists(fullPathToFile))
-           throw new IOException(string.Format("File " + fileName + " does not exist."));
-       else
-           System.IO.File.Delete(fullPathToFile);
    }
    */

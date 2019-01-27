@@ -36,11 +36,11 @@ export class FileService {
     return this.http.request(new HttpRequest('POST', 'api/server/upload/' + currentFolder.join(">") + "/addfolder", fileInfo, { reportProgress: true, }));
   }
 
-  // update(user: PageFile) {
-  //   return this.http.put(`/users/` + user.id, user);
-  // }
+  update(currentFolder: string[], fileInfo: WebFile) {
+    return this.http.request(new HttpRequest('PUT', 'api/server/change/' + currentFolder.join(">"), fileInfo));
+  }
 
-  // delete(id: number) {
-  //   return this.http.delete(`/users/` + id);
-  // }
+  delete(currentFolder: string[], fileInfo: WebFile) {
+    return this.http.request(new HttpRequest('PATCH', 'api/server/delete/' + currentFolder.join(">"), fileInfo));
+  }
 }

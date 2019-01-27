@@ -1,27 +1,48 @@
-<div *ngIf="selectedFile">
-  <div *ngIf="selectedFile.extension; else noExtension">
+<div *ngIf="selectedFile" [@fadeAnimation]="'in'" class="file-detalis">
+    <div *ngIf="!selectedFile.extension; else hasExtension">
+      <p>
+        Directory
+      </p>
+    </div>
+
+    <ng-template #hasExtension>
+      <p>
+        File: {{selectedFile.extension}}
+      </p>
+      <p>
+        Size: {{selectedFile.size.toFixed(2)}} kB
+      </p>
+    </ng-template>
+
     <p>
-      File: {{selectedFile.name}}
+      Creation date: {{selectedFile.dateCreation | date}}
     </p>
-    <p>
-      Extension: {{selectedFile.extension}}
-    </p>
-    <p>
-      Size: {{selectedFile.size.toFixed(2)}} kB
-    </p>
+  <hr />
+
+  <form [formGroup]="fileForm">
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" formControlName="name" value="{{selectedFile.name}}" class="form-control" />
+      <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+        <div *ngIf="f.name.errors.required">Name is required</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="comment">Comment:</label>
+      <input type="text" formControlName="comment" value="{{selectedFile.comment}}" class="form-control" />
+    </div>
+  </form>
+  <div class="file-detalis--center">
+    <div *ngIf="selectedFile.extension;">
+      <div>
+        <button class="btn button-success" (click)="onDownload()">Download file</button>
+      </div>
+    </div>
+    <div>
+      <button class="btn button-info" (click)="onChange()">Apply changes to file</button>
+    </div>
+    <div>
+      <button class="btn button-danger" (dblclick)="onDelete()">Delete file</button>
+    </div>
   </div>
-
-  <ng-template #noExtension>
-    <p>
-      Directory: {{selectedFile.name}}
-    </p>
-  </ng-template>
-
-  <p>
-    Creation date: {{selectedFile.dateCreation | date}}
-  </p>
-  <p>
-    Comment: {{selectedFile.comment}}
-  </p>
-
-</div>
+  </div>

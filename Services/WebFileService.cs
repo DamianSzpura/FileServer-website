@@ -25,7 +25,9 @@ namespace FileServer_website.Services
 
         byte[] GetDataByName(string path, string fileName);
 
-        WebFile GetInfoByName(string path, string fileName);
+        void DeleteFile(string path, WebFile fileInfo);
+
+        void ChangeFile(string path, WebFile fileInfo);
     }
 
     public class WebFileService : IWebFileService
@@ -107,13 +109,6 @@ namespace FileServer_website.Services
 
         public IEnumerable<WebFile> GetAll(string path, string searchFor)
         {
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-
-            var allFiles = Directory.GetFileSystemEntries(path, "*" + searchFor + "*");
-
             if (searchFor == "-")
             {
                 var files = from file in _context.Files
@@ -140,9 +135,84 @@ namespace FileServer_website.Services
             return File.ReadAllBytes(fullPathToFile);
         }
 
-        public WebFile GetInfoByName(string path, string fileName)
+        public void DeleteFile(string path, WebFile fileInfo)
         {
-            throw new NotImplementedException();
+            string fileName = fileInfo.Name;
+            string fullPathToFile = Path.Combine(path, fileName);
+
+            if (!(fileInfo.Extension == null || fileInfo.Extension == ""))
+            {
+                if (!File.Exists(fullPathToFile))
+                    throw new AppException(string.Format("File " + fileName + " does not exist."));
+                else
+                    File.Delete(fullPathToFile);
+            }
+            else
+            {
+                if (!Directory.Exists(fullPathToFile))
+                    throw new AppException(string.Format("File " + fileName + " does not exist."));
+                else
+                    Directory.Delete(fullPathToFile);
+
+                var filesInDirectory = GetAll(Path.Combine(path, fileInfo.Name), "-");
+                _context.Files.RemoveRange(filesInDirectory);
+            }
+
+            var fileToDelete = _context.Files.Find(fileInfo.Id);
+            _context.Files.Remove(fileToDelete);
+            _context.SaveChanges();
+        }
+
+        public void ChangeFile(string path, WebFile fileInfo)
+        {
+            string fileName;
+            if (!(fileInfo.Extension == null || fileInfo.Extension == "") && !fileInfo.Name.EndsWith(fileInfo.Extension))
+                fileName = fileInfo.Name + fileInfo.Extension;
+            else
+                fileName = fileInfo.Name;
+
+            var oldFile = _context.Files.Find(fileInfo.Id);
+
+            if (oldFile == null)
+                throw new AppException("File not found");
+
+            if (fileInfo.Name != oldFile.Name || fileInfo.Path != oldFile.Path)
+            {
+                if (_context.Files.Any(x => x.Name == fileInfo.Name && x.Path == fileInfo.Path))
+                    throw new AppException("File name " + fileInfo.Name + " is already taken in that directory.");
+
+                if (fileInfo.Extension == null || fileInfo.Extension == "")
+                {
+                    var filesInDirectory = GetAll(Path.Combine(path, oldFile.Name), "-");
+
+                    if (fileInfo.Path != oldFile.Path)
+                    {
+                        foreach (WebFile file in filesInDirectory)
+                        {
+                            file.Path = file.Path.Replace(oldFile.Path, fileInfo.Path);
+                        }
+                    }
+                    else
+                    {
+                        foreach (WebFile file in filesInDirectory)
+                        {
+                            file.Path = file.Path.Replace(oldFile.Name, fileInfo.Name);
+                        }
+                    }
+                    _context.Files.UpdateRange(filesInDirectory);
+                    Directory.Move(Path.Combine(oldFile.Path, oldFile.Name), Path.Combine(fileInfo.Path, fileInfo.Name));
+                }
+                else
+                    File.Move(Path.Combine(oldFile.Path, oldFile.Name), Path.Combine(fileInfo.Path, fileInfo.Name));
+
+                oldFile.Path = fileInfo.Path;
+                oldFile.Name = fileName;
+            }
+
+            oldFile.Comment = fileInfo.Comment;
+
+            _context.Files.Update(oldFile);
+            _context.SaveChanges();
         }
     }
 }

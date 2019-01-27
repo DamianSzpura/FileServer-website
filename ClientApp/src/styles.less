@@ -30,19 +30,30 @@
 
 .ngx-contextmenu {
   .dropdown-menu {
-    padding: 1rem 0;
+    padding: 1rem 1rem;
     margin: 0;
+    max-width: 20rem;
   }
 
   li {
-    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  i {
+    margin-right: 1rem;
+  }
+
+  hr {
+    margin-top: 0.7rem;
   }
 
   a {
+    margin: 0 1rem;
     color: rgba(0,0,0, 0.7);
     font-size: 1rem;
     position: relative;
-    overflow: hidden;
     text-decoration: none !important;
     .fullTransform(perspective(1px) translateZ(0));
     .fullTransition(0.3s ease-out);

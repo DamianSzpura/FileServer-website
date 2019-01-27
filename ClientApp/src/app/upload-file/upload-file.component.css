@@ -126,7 +126,7 @@
 }
 .row {
   min-height: 27.502rem;
-  padding: 2rem 0rem;
+  padding: 2rem 2rem;
 }
 .row .card--selected {
   border-color: #ce93d8 !important;
