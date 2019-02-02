@@ -25,23 +25,20 @@
           </ul>
         </div>
         <div class='navbar'>
-          <ul class='nav align-bottom'>
-            <li class="nav-item" [routerLinkActive]='["link-active"]'>
-              <a [routerLink]='["/news"]' class="nav-link nav-link--animate-with-line">
-                NEWS
-              </a>
-            </li>
-            <li class="nav-item" [routerLinkActive]='["link-active"]'>
-              <a [routerLink]='["/counter"]' class="nav-link nav-link--animate-with-line">
-                ACCOUNT
-              </a>
-            </li>
-            <li class="nav-item" [routerLinkActive]='["link-active"]'>
-              <a [routerLink]='["/fetch-data"]' class="nav-link nav-link--animate-with-line">
-                LOG IN
-              </a>
-            </li>
-          </ul>
+          <div *ngIf="currentUser" class="card__file" [@enterAnimation]>
+            <ul class='nav align-bottom'>
+              <li class="nav-item" [routerLinkActive]='["link-active"]'>
+                <a [routerLink]='["/account"]' class="nav-link nav-link--animate-with-line">
+                  ACCOUNT
+                </a>
+              </li>
+              <li class="nav-item" [routerLinkActive]='["link-active"]'>
+                <a (click)="logout()" class="nav-link nav-link--animate-with-line">
+                  LOG OUT
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       </nav>
     </div>

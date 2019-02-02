@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
-using System.IdentityModel.Tokens.Jwt;
 using FileServer_website.Helpers;
 using Microsoft.Extensions.Options;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using FileServer_website.Services;
 using FileServer_website.Dtos;
@@ -43,20 +38,6 @@ namespace FileServer_website.Controllers
             if (user == null)
                 return BadRequest(new { message = "Username or password is incorrect" });
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, user.Id.ToString())
-                }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var tokenString = tokenHandler.WriteToken(token);
-
             // return basic user info (without password) and token to store client side
             return Ok(new
             {
@@ -64,7 +45,9 @@ namespace FileServer_website.Controllers
                 Username = user.Username,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Token = tokenString
+                Style = user.Style,
+                Role = user.Role,
+                Token = user.Token
             });
         }
 
@@ -88,6 +71,7 @@ namespace FileServer_website.Controllers
             }
         }
 
+        [Authorize(Roles = Role.Admin)]
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -96,6 +80,7 @@ namespace FileServer_website.Controllers
             return Ok(userDtos);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {

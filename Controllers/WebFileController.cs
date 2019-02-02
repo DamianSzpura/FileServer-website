@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
 using AutoMapper;
 using FileServer_website.Dtos;
 using FileServer_website.Entities;
@@ -11,8 +8,6 @@ using FileServer_website.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace FileServer_website.Controllers
 {
@@ -155,7 +150,7 @@ namespace FileServer_website.Controllers
              }
          }*/
 
-        private String editPath(String path)
+        public String editPath(String path)
         {
             if (path.Contains(">"))
                 return Path.Combine(Path.Combine(_hostingEnvironment.WebRootPath, "files"), path.Replace(">", "\\"));

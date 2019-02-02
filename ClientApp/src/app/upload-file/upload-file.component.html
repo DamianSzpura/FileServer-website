@@ -23,11 +23,11 @@
   </div>
 </div>
 
-<div class='row'>
+<div class='row justify-content-end'>
   <div class='col-4 justify-content-left' *ngIf="selectedFile" [@enterAnimation]>
     <app-file-operation [selectedFile]="selectedFile" [currentFolder]="currentFolder" (selectedFileChanged)="getFiles()">></app-file-operation>
   </div>
-  <div class='col'>
+  <div class='col-8'>
     <form [formGroup]="searchForm" class="form-inline my-2 mb-sm-2 justify-content-center">
       <div class="form-group">
         <input type="text" formControlName="search" class="form-control mb-sm-2" placeholder="Search" style="width: 25rem;">

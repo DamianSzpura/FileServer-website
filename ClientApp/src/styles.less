@@ -28,6 +28,16 @@
   filter: alpha(opacity=20);
 }
 
+::-moz-selection {
+  background: @violet;
+  color: @white;
+}
+
+::selection {
+  background: @violet;
+  color: @white;
+}
+
 .ngx-contextmenu {
   .dropdown-menu {
     padding: 1rem 1rem;
@@ -36,7 +46,7 @@
   }
 
   li {
-    white-space: nowrap;
+   @white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
@@ -51,7 +61,7 @@
 
   a {
     margin: 0 1rem;
-    color: rgba(0,0,0, 0.7);
+    color: @black;
     font-size: 1rem;
     position: relative;
     text-decoration: none !important;

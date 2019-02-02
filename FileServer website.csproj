@@ -57,7 +57,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\files\aaa\NewFolder\" />
+    <Folder Include="wwwroot\files\" />
     <Folder Include="wwwroot\Upload\NewFolder\" />
   </ItemGroup>
 

@@ -1,17 +1,26 @@
-﻿.line2 {
+﻿:root {
+  --violet: #ce93d8;
+  --pink: #ff66c4;
+  --black: #212121;
+  --grey: #484848;
+  --white: #fff;
+  --white-border: rgba(255, 255, 255, 0.7);
+  --black-border: rgba(0, 0, 0, 0.4);
+}
+.line2 {
   transform: rotate(90deg);
   position: absolute;
   height: 0.2rem;
   width: 115%;
   top: 48%;
   left: 56.6%;
-  background-color: black;
+  background-color: var(--black);
   pointer-events: none;
 }
 hr {
-  background-color: #212121 !important;
-  color: #212121 !important;
-  border: solid 0px #212121 !important;
+  background-color: var(--black) !important;
+  color: var(--black) !important;
+  border: solid 0px var(--black) !important;
   height: 0.2rem !important;
 }
 .main-nav {
@@ -29,7 +38,7 @@ hr {
   margin: 0rem;
   background: url(https://media-public.canva.com/MAB5cKXAlps/2/screen.png) repeat-y;
   background-size: 30rem;
-  background-color: #ce93d8;
+  background-color: var(--violet);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   -webkit-animation: aitf 80s linear infinite;
@@ -87,7 +96,7 @@ hr {
   left: 51%;
   right: 51%;
   bottom: -0.2rem;
-  background: #ce93d8;
+  background: var(--violet);
   height: 0.2rem;
   -webkit-transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   -moz-transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -139,7 +148,7 @@ hr {
   border-radius: 4px;
   background: url(https://media-public.canva.com/MAB5cKXAlps/2/screen.png) repeat-y;
   background-size: 30rem;
-  background-color: #212121;
+  background-color: var(--black);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   -webkit-animation: aitf 80s linear infinite;
@@ -158,7 +167,7 @@ hr {
 .main-nav ul li.link-active a,
 .main-nav ul li.link-active a:hover,
 .main-nav ul li.link-active a:focus {
-  background-color: #ce93d8;
+  background-color: var(--violet);
 }
 @-webkit-keyframes aitf {
   from {

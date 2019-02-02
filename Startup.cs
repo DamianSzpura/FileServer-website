@@ -13,6 +13,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using FileServer_website.Helpers;
 using FileServer_website.Services;
+using FileServer_website.Controllers;
 
 namespace FileServer_website
 {
@@ -81,6 +82,7 @@ namespace FileServer_website
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IWebFileService, WebFileService>();
+            services.AddScoped<IShareFileService, ShareFileService>();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

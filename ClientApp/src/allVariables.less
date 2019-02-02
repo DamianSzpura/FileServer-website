@@ -1,8 +1,22 @@
-@violet: #ce93d8;
-@pink: #ff66c4;
-@black: #212121;
-@grey: #484848;
-@white: #ffffff;
+:root {
+  --violet: #ce93d8;
+  --pink: #ff66c4;
+  --black: #212121;
+  --grey: #484848;
+  --white: #fff;
+  --white-border: rgba(255,255,255, 0.7);
+  --black-border: rgba(0, 0, 0, 0.4);
+}
+
+@violet: var(--violet);
+@pink: var(--pink);
+@black: var(--black);
+@grey: var(--grey);
+@white: var(--white);
+
+@white-border: var(--white-border);
+@black-border: var(--black-border);
+@violet-shadow: var(--violet);
 
 @backgroundUrl: url(https://media-public.canva.com/MAB5cOxZt-I/2/screen.png);
 
