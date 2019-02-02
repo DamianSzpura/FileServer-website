@@ -1,6 +1,6 @@
 
 <h1>FileServer-website
-<h3>How to build it for yourself
+<h3>How to build it for yourself</h3>
 <p><ul>
   <li> Download or clone this repository to folder ./Project/FileServer website.
   <li> Cut FileServer website.sln file from folder ./Project/FileServer website into ./Project.
