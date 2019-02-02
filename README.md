@@ -6,4 +6,4 @@
   <li> Cut FileServer website.sln file from folder ./Project/FileServer website into ./Project.
   <li> Open project with Visual Studio.
   <li> Open NuGet Command Line and write "dotnet restore".
-  <li> Run/Build project.
+  <li> Run/Build project in Visual Studio.
