@@ -16,12 +16,16 @@ export class FileService {
     return this.http.get<Array<WebFile>>('api/server/files/' + currentFolder.join(">") + "/" + searchForm.controls.search.value);
   }
 
+  getFileInfo(linkId: string): any {
+    return this.http.get<WebFile>('api/server/share/file/' + linkId);
+  }
+
   getByName(currentFolder: string[], fileName: string) {
     return this.http.get<File>('api/server/file/' + currentFolder.join(">") + "/" + fileName + "/download", { responseType: 'blob' as 'json' });
   }
 
-  getFileInfo(currentFolder: string[], fileName: string): any {
-    return this.http.get<WebFile>('api/server/file/' + currentFolder.join(">") + "/" + fileName);
+  getDataLinkId(linkId: string): any {
+    return this.http.get<File>('api/server/share/file/download/' + linkId, { responseType: 'blob' as 'json' });
   }
 
   addToServer(currentFolder: string[], formData: FormData) {

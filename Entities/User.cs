@@ -11,6 +11,11 @@ namespace FileServer_website.Entities
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
 
+        public string Role { get; set; }
+        public string Token { get; set; }
+
+        public string Style { get; set; }
+
         public List<WebFile> WebFiles { get; set; }
     }
 }

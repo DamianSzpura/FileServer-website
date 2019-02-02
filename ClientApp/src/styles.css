@@ -1,4 +1,13 @@
-﻿/* in-flight clone */
+﻿:root {
+  --violet: #ce93d8;
+  --pink: #ff66c4;
+  --black: #212121;
+  --grey: #484848;
+  --white: #fff;
+  --white-border: rgba(255, 255, 255, 0.7);
+  --black-border: rgba(0, 0, 0, 0.4);
+}
+/* in-flight clone */
 .gu-mirror {
   position: fixed !important;
   margin: 0 !important;
@@ -25,13 +34,20 @@
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
   filter: alpha(opacity=20);
 }
+::-moz-selection {
+  background: var(--violet);
+  color: var(--white);
+}
+::selection {
+  background: var(--violet);
+  color: var(--white);
+}
 .ngx-contextmenu .dropdown-menu {
   padding: 1rem 1rem;
   margin: 0;
   max-width: 20rem;
 }
 .ngx-contextmenu li {
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -43,7 +59,7 @@
 }
 .ngx-contextmenu a {
   margin: 0 1rem;
-  color: rgba(0, 0, 0, 0.7);
+  color: var(--black);
   font-size: 1rem;
   position: relative;
   text-decoration: none !important;
@@ -61,7 +77,7 @@
 .ngx-contextmenu a:hover,
 .ngx-contextmenu a:active {
   cursor: pointer;
-  color: #ce93d8;
+  color: var(--violet);
 }
 * {
   font-family: 'NowMedium';
@@ -83,13 +99,13 @@ html body .col-8 {
   padding: 0 1.2rem;
 }
 html body a {
-  color: #ce93d8;
+  color: var(--violet);
 }
 html body a:hover {
-  color: #ce93d8;
+  color: var(--violet);
 }
 html body code {
-  color: #ff66c4;
+  color: var(--pink);
 }
 @media (min-width: 576px) {
   html {

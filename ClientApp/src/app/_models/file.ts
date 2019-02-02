@@ -1,5 +1,6 @@
 export class WebFile {
   id: number;
+  linkId: string;
   name: string;
   extension: string
   comment: string;

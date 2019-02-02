@@ -120,8 +120,6 @@ export class UploadFileComponent implements OnInit {
       this.fileService.getAllFromSearch(this.currentFolder, this.searchForm)
         .subscribe(result => {
           this.files = result;
-        }, error => {
-          this.alertService.error(error);
         });
       this.selectedFile = null;
     }
@@ -220,18 +218,3 @@ export class UploadFileComponent implements OnInit {
       return null;
   }
 }
-
-/*
-  delete(file) {
-    const formData = new FormData();
-
-    formData.append(file, file);
-
-    const deleteReq = new HttpRequest('DELETE', 'api/upload', formData, { reportProgress: true, });
-
-    this.http.request(deleteReq).subscribe(event => {
-      if (event.type === HttpEventType.Response) {
-        this.message = event.body.toString();
-      }
-    });
-  } */

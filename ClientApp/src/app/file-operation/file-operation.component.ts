@@ -5,33 +5,26 @@ import { FileService } from '../_services/file.service';
 import { AlertService } from '../_services/alert.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { trigger, transition, style, animate, state } from '@angular/animations';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-file-operation',
   templateUrl: './file-operation.component.html',
-  styleUrls: ['./file-operation.component.less'],
-  animations: [
-    trigger('fadeAnimation', [
-      state('in', style({ opacity: 1 })),
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate(600)
-      ]),
-      transition(':leave',
-        animate(600, style({ opacity: 0 })))
-    ])
-  ]
+  styleUrls: ['./file-operation.component.less']
 })
+
 export class FileOperationComponent implements OnChanges {
   @Input() selectedFile: WebFile;
   @Input() currentFolder: string[];
   @Output() selectedFileChanged = new EventEmitter();
   fileForm: FormGroup;
   submitted: boolean = false;
+  public buttonClicked: boolean;
 
   constructor(
     private fileService: FileService,
     private formBuilder: FormBuilder,
+    private router: Router,
     private alertService: AlertService) {
   }
 
@@ -47,6 +40,7 @@ export class FileOperationComponent implements OnChanges {
   get f() { return this.fileForm.controls; }
 
   onDownload() {
+    this.buttonClicked = true;
     this.fileService.getByName(this.currentFolder, this.selectedFile.name)
       .subscribe(result => {
         if (!result.type.endsWith("json")) {
@@ -65,9 +59,13 @@ export class FileOperationComponent implements OnChanges {
       }, error => {
         this.alertService.error(error);
       });
+    setTimeout(() => {
+      this.buttonClicked = false
+    }, 5000);
   }
 
   onChange() {
+    this.buttonClicked = true;
     if (!this.submitted && this.f.name.value == "-") {
       this.f.name.setValue(this.selectedFile.name);
     }
@@ -88,9 +86,13 @@ export class FileOperationComponent implements OnChanges {
         }, error => {
           this.alertService.error(error);
         });
+    setTimeout(() => {
+      this.buttonClicked = false
+    }, 5000);
   }
 
   onDelete() {
+    this.buttonClicked = true;
     this.fileService.delete(this.currentFolder, this.selectedFile)
       .subscribe(
         event => {
@@ -99,6 +101,11 @@ export class FileOperationComponent implements OnChanges {
           this.selectedFile = null;
         }, error => {
           this.alertService.error(error);
-        });
+      });
+    this.buttonClicked = false;
+  }
+
+  onGetLink() {
+    this.router.navigate(["/file", this.selectedFile.linkId]);
   }
 }

@@ -6,7 +6,7 @@
   margin: 0 auto;
   display: block;
   height: 100%;
-  border: 1px solid rgba(0, 0, 0, 0.4);
+  border: 1px solid @black-border;
   text-align: center;
 
   .form-box__background {
@@ -25,8 +25,9 @@
 .form-box {
   padding: 1rem;
   margin: 0 auto;
-  background-color: white;
-  border: 1px solid rgba(0, 0, 0, 0.4);
+  background-color:@white;
+ 
+  border: 1px solid @black-border;
 
   label {
     letter-spacing: 0.1rem;
@@ -41,10 +42,10 @@
 
   .form-control:focus {
     color: @violet;
-    background-color: #fff;
+    background-color: @white;
     border-color: @violet;
     outline: 0;
-    box-shadow: 0px 7px 25px -3px rgba(206,147,216,1);
+    box-shadow: 0px 7px 25px -3px @violet-shadow;
   }
 
   .button {
@@ -53,8 +54,8 @@
     background-position: center;
     background-color: @black;
     position: relative;
-    color: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.4);
+    color: @white;
+    border: 1px solid @black-border;
     width: 9rem;
     .fullTransition(0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275));
   }
@@ -65,13 +66,13 @@
   }
 
   .button:focus {
-    box-shadow: 0px 0px 35px -3px rgba(206,147,216,1);
+    box-shadow: 0px 0px 35px -3px @violet-shadow;
   }
 
   hr {
-    background-color: #212121 !important;
-    color: #212121 !important;
-    border: solid 0px #212121 !important;
+    background-color: @black !important;
+    color: @black !important;
+    border: solid 0px @black !important;
     height: 0.2rem !important;
   }
 

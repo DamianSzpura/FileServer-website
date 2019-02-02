@@ -1,4 +1,4 @@
-<div *ngIf="message" class="alert-message" [ngClass]="{ 'alert': message, 'alert-success': message.type === 'success', 'alert-danger': message.type === 'error' }">
+<div *ngIf="message" [@alertAnimation] class="alert-message" [ngClass]="{ 'alert': message, 'alert-success': message.type === 'success', 'alert-danger': message.type === 'error' }">
   {{ message.text }}  
   <a class="close" (click)="onHide()">&times;</a>
 </div>

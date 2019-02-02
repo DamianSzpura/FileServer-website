@@ -9,8 +9,6 @@ using FileServer_website.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace FileServer_website.Services
 {
     public interface IWebFileService
@@ -63,17 +61,21 @@ namespace FileServer_website.Services
 
         public void AddFileToDb(WebFile[] fileInfoArray)
         {
+            var files = this.GetAll(fileInfoArray[0].Path, "-");
+
             foreach (WebFile fileInfo in fileInfoArray)
             {
                 fileInfo.Extension = Path.GetExtension(Path.Combine(fileInfo.Path, fileInfo.Name));
                 fileInfo.Comment = "";
+                fileInfo.LinkId = Guid.NewGuid().ToString("N");
+
+                if (files.Any(x => x.Name == fileInfo.Name))
+                    throw new AppException(string.Format("That file is already in folder."));
 
                 if (fileInfo.Size <= 0)
                     throw new AppException(string.Format("File length is equal 0. Cannot upload such a file."));
-                else
-                {
-                    _context.Files.Add(fileInfo);
-                }
+
+                _context.Files.Add(fileInfo);
             }
             _context.SaveChanges();
         }
@@ -150,7 +152,9 @@ namespace FileServer_website.Services
             else
             {
                 if (!Directory.Exists(fullPathToFile))
-                    throw new AppException(string.Format("File " + fileName + " does not exist."));
+                    throw new AppException(string.Format("Directory " + fileName + " does not exist."));
+                else if (Directory.GetFileSystemEntries(fullPathToFile).Length == 0)
+                    throw new AppException(string.Format("Directory is not empty."));
                 else
                     Directory.Delete(fullPathToFile);
 
@@ -200,10 +204,10 @@ namespace FileServer_website.Services
                         }
                     }
                     _context.Files.UpdateRange(filesInDirectory);
-                    Directory.Move(Path.Combine(oldFile.Path, oldFile.Name), Path.Combine(fileInfo.Path, fileInfo.Name));
+                    Directory.Move(Path.Combine(oldFile.Path, oldFile.Name), Path.Combine(fileInfo.Path, fileName));
                 }
                 else
-                    File.Move(Path.Combine(oldFile.Path, oldFile.Name), Path.Combine(fileInfo.Path, fileInfo.Name));
+                    File.Move(Path.Combine(oldFile.Path, oldFile.Name), Path.Combine(fileInfo.Path, fileName));
 
                 oldFile.Path = fileInfo.Path;
                 oldFile.Name = fileName;

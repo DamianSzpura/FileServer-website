@@ -33,6 +33,12 @@ namespace FileServer_website.Migrations
 
                     b.Property<byte[]>("PasswordSalt");
 
+                    b.Property<string>("Role");
+
+                    b.Property<string>("Style");
+
+                    b.Property<string>("Token");
+
                     b.Property<string>("Username");
 
                     b.HasKey("Id");
@@ -51,6 +57,8 @@ namespace FileServer_website.Migrations
                     b.Property<DateTime>("DateCreation");
 
                     b.Property<string>("Extension");
+
+                    b.Property<string>("LinkId");
 
                     b.Property<string>("Name");
 

@@ -1,8 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using FileServer_website.Entities;
 using FileServer_website.Helpers;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FileServer_website.Services
 {
@@ -24,10 +30,14 @@ namespace FileServer_website.Services
     public class UserService : IUserService
     {
         private DataContext _context;
+        private readonly AppSettings _appSettings;
 
-        public UserService(DataContext context)
+        public UserService(
+            DataContext context,
+            IOptions<AppSettings> appSettings)
         {
             _context = context;
+            _appSettings = appSettings.Value;
         }
 
         public User Authenticate(string username, string password)
@@ -37,15 +47,27 @@ namespace FileServer_website.Services
 
             var user = _context.Users.SingleOrDefault(x => x.Username == username);
 
-            // check if username exists
             if (user == null)
                 return null;
 
-            // check if password is correct
             if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
                 return null;
 
-            // authentication successful
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, user.Id.ToString()),
+                    new Claim(ClaimTypes.Role, user.Role)
+                }),
+                Expires = DateTime.UtcNow.AddDays(7),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            user.Token = tokenHandler.WriteToken(token);
+
             return user;
         }
 
@@ -61,7 +83,6 @@ namespace FileServer_website.Services
 
         public User Create(User user, string password)
         {
-            // validation
             if (string.IsNullOrWhiteSpace(password))
                 throw new AppException("Password is required");
 
@@ -73,6 +94,8 @@ namespace FileServer_website.Services
 
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
+            user.Role = Role.User;
+            user.Style = "violet";
 
             _context.Users.Add(user);
             _context.SaveChanges();
@@ -89,17 +112,15 @@ namespace FileServer_website.Services
 
             if (userParam.Username != user.Username)
             {
-                // username has changed so check if the new username is already taken
                 if (_context.Users.Any(x => x.Username == userParam.Username))
                     throw new AppException("Username " + userParam.Username + " is already taken");
             }
 
-            // update user properties
+            user.Style = userParam.Style;
             user.FirstName = userParam.FirstName;
             user.LastName = userParam.LastName;
             user.Username = userParam.Username;
 
-            // update password if it was entered
             if (!string.IsNullOrWhiteSpace(password))
             {
                 byte[] passwordHash, passwordSalt;
@@ -118,12 +139,15 @@ namespace FileServer_website.Services
             var user = _context.Users.Find(id);
             if (user != null)
             {
+                var files = from file in _context.Files
+                            where file.Path.Contains(user.Username)
+                            select file;
+
+                _context.Files.RemoveRange(files);
                 _context.Users.Remove(user);
                 _context.SaveChanges();
             }
         }
-
-        // private helper methods
 
         private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {

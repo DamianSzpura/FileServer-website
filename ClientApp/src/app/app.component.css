@@ -1,12 +1,21 @@
-﻿.body-content {
+﻿:root {
+  --violet: #ce93d8;
+  --pink: #ff66c4;
+  --black: #212121;
+  --grey: #484848;
+  --white: #fff;
+  --white-border: rgba(255, 255, 255, 0.7);
+  --black-border: rgba(0, 0, 0, 0.4);
+}
+.body-content {
   padding: 0em 15px;
 }
 .first {
   padding: 2rem;
 }
 .second {
-  border: 1px solid rgba(0, 0, 0, 0.4);
-  background-color: rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--black-border);
+  background-color: var(--white-border);
   padding: 0 2rem 3.5rem 2rem;
   margin-bottom: 2rem;
 }
