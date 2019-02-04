@@ -45,4 +45,4 @@ And done!
 * [ASP.NET Core](https://docs.microsoft.com/pl-pl/aspnet/core/?view=aspnetcore-2.2) - The backend framework used
 
 ## License
-MIT
+This project is under [MIT](https://en.wikipedia.org/wiki/MIT_License) license.
