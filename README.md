@@ -2,7 +2,7 @@
 
 is Project made for Event-driven programming in my univesity. Its webpage where you can upload, share and manage files on your own account. You can find full project documentation here: [Dokumentacja-do-projektu](https://drive.google.com/open?id=1uNlhWbRuy907aaJW28uYC5jnoFXWaph2) (only in polish)
 
-![App screen](https://ibb.co/7VjhKhJ)
+![App screen](https://i.ibb.co/P4FkgkZ/1.png)
 
 ## Getting Started
 
