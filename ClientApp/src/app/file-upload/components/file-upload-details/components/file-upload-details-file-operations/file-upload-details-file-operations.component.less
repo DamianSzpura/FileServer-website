@@ -1,0 +1,60 @@
+@import url('../../../../../core/components/login/login.component.less');
+@import url('../../../../../../assets/styles/allVariables.less');
+
+.file-detalis {
+  text-align: right;
+
+  .btn {
+    margin: 0.4rem 0;
+  }
+
+  p {
+    overflow-wrap: break-word;
+  }
+
+  .form-control {
+    border-radius: 0;
+    text-align: center;
+    .fullTransition(0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275));
+  }
+
+  .form-control:focus {
+    color: @violet;
+    background-color: @white;
+    border-color: @violet;
+    outline: 0;
+    box-shadow: 0px 7px 25px -3px @violet-shadow;
+  }
+
+  .button {
+    background: @backgroundUrlWaves;
+    background-size: 30rem;
+    background-position: center;
+    background-color: @black;
+    position: relative;
+    color: @white;
+    border: 1px solid @black-border;
+    width: 13rem;
+    .fullTransition(0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275));
+  }
+
+  .button:hover {
+    transform: scale(1.1);
+    background-color: @violet;
+  }
+
+  .button:focus {
+    box-shadow: 0px 0px 35px -3px @violet-shadow;
+  }
+
+  hr {
+    background-color: @black !important;
+    color: @black !important;
+    border: solid 0px @black !important;
+    height: 0.12rem !important;
+  }
+
+  .file-detalis--center {
+    text-align: center;
+  }
+}

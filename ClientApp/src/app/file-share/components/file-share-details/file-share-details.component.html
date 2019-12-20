@@ -1,0 +1,42 @@
+<div class="form-box__border">
+  <div class="form-box__background">
+    <div class="form-box">
+      <div *ngIf="sharedFile; else noFile" class="file-detalis">
+        <div class="file-detalis--center">
+          <p>
+            File: {{sharedFile.extension}}
+          </p>
+          <p>
+            Size: {{sharedFile.size.toFixed(2)}} kB
+          </p>
+          <p>
+            Creation date: {{sharedFile.dateCreation | date}}
+          </p>
+          <hr />
+          <p>Name: {{sharedFile.name}}</p>
+          <p>Owner: {{sharedFileOwner.firstName}} {{sharedFileOwner.lastName}}</p>
+          <p *ngIf="sharedFile.comment">Comment: {{sharedFile.comment}}</p>
+
+          <div *ngIf="sharedFile.extension;">
+            <div>
+              <button [disabled]="fileDownloaded" class="btn button" (click)="onDownload()">Download file</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #noFile>
+        <div class="file-detalis">
+          <div class="file-detalis--center">
+            <p>
+              File does not exist.
+            </p>
+            <small>
+              Its propably got deleted by the owner.
+            </small>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

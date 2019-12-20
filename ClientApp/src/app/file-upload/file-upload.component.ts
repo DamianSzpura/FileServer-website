@@ -1,12 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { formatNumber } from '@angular/common';
 
 @Component({
-  selector: 'app-file-share',
+  selector: 'app-file-upload',
   template: '<router-outlet></router-outlet>',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FileShareComponent {
-  constructor() {
-   }
+export class FileUploadComponent {
+  constructor() { }
 }

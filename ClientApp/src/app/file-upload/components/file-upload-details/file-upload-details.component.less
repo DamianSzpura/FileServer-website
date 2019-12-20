@@ -1,0 +1,221 @@
+@import url('../../../../assets/styles/allVariables.less');
+
+.upload-label {
+  color: @white-border;
+  font-size: 2.5rem;
+  padding: 1rem 1rem 0rem 1rem;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+  .fullTransform(perspective(1px) translateZ(0));
+  .fullTransition(0.3s ease-out);
+}
+
+.upload-label:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 51%;
+  right: 51%;
+  bottom: 0;
+  background: @white;
+  height: 0.3rem;
+  .fullTransition(0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275));
+  transition-property: left, right;
+}
+
+.upload-label:focus,
+.upload-label:hover,
+.upload-label:active {
+  cursor: pointer;
+  color: @white;
+}
+
+.upload-label:focus:before,
+.upload-label:hover:before,
+.upload-label:active:before {
+  left: 0;
+  right: 0;
+}
+
+.upload__background--color {
+  .img--size {
+    display: block;
+    height: 100%;
+    padding: 3rem;
+    border: 1px solid @black-border;
+  }
+
+  .img--background {
+    background: @backgroundUrlWaves;
+    background-size: 30rem;
+    background-repeat: repeat;
+    background-color: @violet;
+    animation: right 80s linear infinite;
+    transform: translate3d(0,0,0);
+    backface-visibility: hidden;
+    position: relative;
+    text-align: end;
+  }
+
+  .upload--file-over {
+    color: @white;
+  }
+
+  .upload--file-over:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    left: 51%;
+    right: 51%;
+    bottom: 0;
+    background: @white;
+    height: 0.3rem;
+    .fullTransition(0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275));
+    transition-property: left, right;
+  }
+
+  .upload--file-over:before {
+    left: 0;
+    right: 0;
+  }
+
+  span {
+    font-weight: bold;
+    color:@white;
+    position: absolute;
+    left: 3rem;
+    bottom: 1rem;
+  }
+
+  .progress {
+    position: relative;
+    border-radius: 0;
+    background-color: transparent;
+    overflow: visible;
+
+    .progress--background {
+      display: flex;
+      height: 1rem;
+      width: 100%;
+      background-color: @black-border;
+      position: absolute;
+      top: 0.6rem;
+      left: -1rem;
+    }
+
+    .progress-bar {
+      background-color: @white;
+      z-index: 10;
+    }
+  }
+}
+
+.card__header {
+  table-layout: fixed;
+  width: 6rem;
+  margin: 1rem;
+  margin-bottom: 0;
+  height: 1rem;
+  white-space: nowrap;
+
+  p {
+    font-size: 0.75rem;
+    margin-bottom: 0;
+    @white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.row--border {
+  border: 1px solid @black-border;
+  margin-top: 0.5rem;
+}
+
+.row {
+  min-height: 27.502rem;
+  padding: 2rem 2rem;
+
+  .card--selected {
+    border-color: @violet !important;
+  }
+
+  .card--box {
+    width: 7rem;
+    height: 7rem;
+    margin: 0.5rem;
+    margin-top: 0;
+    border-color: @grey;
+    border-width: 0.4rem;
+    padding: 0;
+    position: relative;
+    .fullTransform(perspective(1px) translateZ(0));
+    .fullTransition(0.2s ease-out);
+
+    .card__inside-box {
+      width: 5.3rem;
+      height: 5.3rem;
+      position: absolute;
+      margin: auto;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: @grey;
+      text-align: center;
+      overflow: hidden;
+
+      p {
+        width: 100%;
+        position: absolute;
+        text-align: center;
+        padding-top: 100%;
+        font-size: 1.3rem;
+        color: @white;
+        .fullTransform(translateY(-50%));
+      }
+
+      .fa-3x {
+        color: @white;
+        .fullTransform(translateY(-50%));
+        padding-top: 100%;
+      }
+    }
+  }
+
+  .card--box:before {
+    content: "";
+    position: absolute;
+    left: 51%;
+    right: 51%;
+    bottom: -0.4rem;
+    background-color: @violet;
+    height: 0.4rem;
+    .fullTransition(0.2s ease-out);
+    transition-property: left, right;
+  }
+
+  .card--box:focus,
+  .card--box:hover,
+  .card--box:active {
+    cursor: pointer;
+  }
+
+  .card--box:focus:before,
+  .card--box:hover:before,
+  .card--box:active:before {
+    left: 0;
+    right: 0;
+  }
+}
+
+@keyframes right {
+  from {
+    background-position: 100% 0;
+  }
+
+  to {
+    background-position: 0% 0;
+  }
+}
