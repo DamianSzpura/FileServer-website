@@ -2,12 +2,17 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http.Headers;
+using System.Net.Mail;
+using System.Text;
 using System.Threading.Tasks;
+using FileServer_website.Dtos;
 using FileServer_website.Entities;
 using FileServer_website.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace FileServer_website.Services
 {
@@ -26,14 +31,17 @@ namespace FileServer_website.Services
         void DeleteFile(string path, WebFile fileInfo);
 
         void ChangeFile(string path, WebFile fileInfo);
+        void SendLinkToEmailAdress(SendMailDto sendMailData);
     }
 
     public class WebFileService : IWebFileService
     {
         private DataContext _context;
+        private readonly AppSettings _appSettings;
 
-        public WebFileService(DataContext context)
+        public WebFileService(DataContext context, IOptions<AppSettings> appSettings)
         {
+            _appSettings = appSettings.Value;
             _context = context;
         }
 
@@ -54,6 +62,20 @@ namespace FileServer_website.Services
                     using (var stream = new FileStream(fullPathToFile, FileMode.Create))
                     {
                         file.CopyTo(stream);
+                    }
+
+                    if (IsExecutableFile(File.ReadAllBytes(fullPathToFile)))
+                    {
+                        string sendTo = _appSettings.AdminEmail;
+                        string subject = "ADMIN WARNING";
+                        StringBuilder message = new StringBuilder();
+                        message.Append("<h1>WARNING</h1>");
+                        message.Append("<h2>An executable file has been added to the server.</h2>");
+                        message.Append("<h2>Path: ");
+                        message.Append(fullPathToFile);
+                        message.Append("</h2>");
+
+                        this.SendEmail(sendTo, message.ToString(), subject);
                     }
                 }
             }
@@ -153,8 +175,11 @@ namespace FileServer_website.Services
             {
                 if (!Directory.Exists(fullPathToFile))
                     throw new AppException(string.Format("Directory " + fileName + " does not exist."));
-                else if (Directory.GetFileSystemEntries(fullPathToFile).Length == 0)
+                else if (Directory.GetFileSystemEntries(fullPathToFile).Length > 0)
+                {
+                    var any = Directory.GetFileSystemEntries(fullPathToFile).Length;
                     throw new AppException(string.Format("Directory is not empty."));
+                }
                 else
                     Directory.Delete(fullPathToFile);
 
@@ -217,6 +242,48 @@ namespace FileServer_website.Services
 
             _context.Files.Update(oldFile);
             _context.SaveChanges();
+        }
+
+        public void SendLinkToEmailAdress(SendMailDto sendMailData)
+        {
+            string sendTo = sendMailData.sendToEmail;
+            string subject = "Somebody shared you new file!";
+            StringBuilder message = new StringBuilder();
+            message.Append("<h1>Hello</h1>");
+            message.Append("<h2>You just got new file, check it out");
+            message.Append("<a href=\"");
+            message.Append(sendMailData.link);
+            message.Append("\">here!</a>");
+            message.Append("</h2>");
+
+            this.SendEmail(sendTo, message.ToString(), subject);
+        }
+
+        private void SendEmail(string to, string message, string subject) {
+            using (MailMessage mail = new MailMessage())
+            {
+                mail.From = new MailAddress("idontreallycareaboutpls@gmail.com");
+                mail.To.Add(to);
+                mail.Subject = subject;
+                mail.Body = message;
+                mail.IsBodyHtml = true;
+
+                using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    smtp.UseDefaultCredentials = false;
+                    smtp.Credentials = new NetworkCredential("idontreallycareaboutpls@gmail.com", "SAM12DAM12");
+                    // :)
+                    smtp.EnableSsl = true;
+                    smtp.Send(mail);
+                }
+            }
+        }
+
+        private bool IsExecutableFile(byte[] FileContent)
+        {
+            byte[] bytes = new byte[2];
+            Array.Copy(FileContent, 0, bytes, 0, 2);
+            return ((Encoding.UTF8.GetString(bytes) == "MZ") || (Encoding.UTF8.GetString(bytes) == "ZM"));
         }
     }
 }
