@@ -136,6 +136,20 @@ namespace FileServer_website.Controllers
             }
         }
 
+        [HttpPost("send-email")]
+        public IActionResult SendEmail([FromBody]SendMailDto sendMailData)
+        {
+            try
+            {
+                _webFileService.SendLinkToEmailAdress(sendMailData);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
         /* [HttpGet("file/{path}/{fileName}/download")]
          public IActionResult GetInfoByName(string path, string fileName)
          {

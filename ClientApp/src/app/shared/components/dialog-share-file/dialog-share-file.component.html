@@ -1,0 +1,44 @@
+
+    <div class="form-box">
+      <h2 mat-dialog-title>Share {{data.file.name}}</h2>
+      <div class="row">
+          <div class="col-12 ">
+            Share link with email
+            </div>
+        <div class="col-12 form-group">
+          <label for="username">EMAIL</label>
+          <div class="row p-0">
+              <div class="col-8">
+                  <input type="text" [formControl]="emailControl" class="form-control" [class.is-invalid]="emailControl.touched && emailControl.errors" />
+                  <div *ngIf="emailControl.touched && emailControl.errors" class="invalid-feedback">
+                      <div *ngIf="emailControl.errors['required']">Email is required</div>
+                      <div *ngIf="emailControl.errors['email']">This is not a valid email</div>
+                  </div>
+                  <div *ngIf="!emailControl.errors" class="valid-feedback">
+                      <div *ngIf="sendMessage">Email send</div>
+                  </div>
+                </div>
+              <div class="col-4 text-center">
+                  <button type="submit" [disabled]="loading" class="btn button" (click)="onSubmit()">Send email</button>
+                </div>
+          </div>
+        </div>
+    
+      </div>
+
+      <div class="row">
+          <div class="col-12">
+            or copy link for yourself
+            </div>
+        <div class="col-12 form-group">
+            <input type="text" [readonly]="true" class="form-control"  [value]="data.link"/>
+        </div>
+      </div>
+
+      <div class="row">
+          <div class="col-12 text-center">
+              <button [disabled]="loading" class="btn button" (click)="closeDialog()">Close</button>
+            </div>
+      </div>
+    </div>
+

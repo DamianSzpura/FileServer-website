@@ -1,0 +1,99 @@
+<div class="upload__background--color">
+  <div class="img--size img--background justify-content-center">
+    <label for="uploader-input" class="upload-label"
+           ng2FileDrop
+           [ngClass]="{'upload--file-over': hasFileOver }"
+           (onFileDrop)="onUpload($event)"
+           (fileOver)="fileOver($event)"
+           [uploader]="uploader">
+      CLICK OR DRAG TO UPLOAD
+    </label>
+    <input #file type="file" multiple (change)="onUpload(file.files)" id="uploader-input" style="display:none" />
+    <br />
+    <div class="progress" style="margin: 10px">
+      <div class="progress--background"></div>
+      <div id="prog-bar" class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 1%">
+        <span class="sr-only">{{uploadProgress}}%</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class='row justify-content-end'>
+  <div class='col-4 justify-content-left' *ngIf="selectedFile" [@enterAnimation]>
+    <app-file-upload-details-file-operations [selectedFile]="selectedFile" [currentFolder]="currentFolder" (selectedFileChanged)="getFiles()">></app-file-upload-details-file-operations>
+  </div>
+  <div class='col-8'>
+    <form [formGroup]="searchForm" class="form-inline my-2 mb-sm-2 justify-content-center">
+      <div class="form-group">
+        <input type="text" formControlName="search" class="form-control mb-sm-2" placeholder="Search" style="width: 25rem;">
+      </div>
+
+      <div class="form-group" style="width: 100%;">
+        <fieldset disabled="" style="width: 100%;">
+          <input class="form-control" id="disabledPath" type="text" value="{{'Folder path: ./' + currentFolder.join('/')}}" placeholder="Folder path" disabled="" style="width: 100%;">
+        </fieldset>
+      </div>
+    </form>
+    <div class="row no-gutters row--border" [contextMenu]="fileMenu">
+      <div *ngIf="currentFolder.length > 1" [@enterAnimation] class="col flex-grow-0">
+        <div class="card__file">
+          <div class="card__header"><p>Return</p></div>
+          <div class="card card--box rounded-0" (click)="onCloseFolder()">
+            <div class="card-body">
+              <div class="card__inside-box">
+                <i class="fas fa-undo fa-3x"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col flex-grow-0" *ngFor="let file of files" [@enterAnimation]>
+        <div *ngIf="file.extension; else noExtension" class="card__file">
+          <div class="card__header"><p>{{file.name}}</p></div>
+          <div id="{{file.name}}" class="card card--box rounded-0" (click)="onSelect(file)">
+            <div class="card-body">
+              <div class="card__inside-box">
+                <p>{{file.extension}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <ng-template #noExtension>
+          <div class="card__header"><p>{{file.name}}</p></div>
+          <div id="{{file.name}}" class="card card--box rounded-0" (click)="onSelect(file)" (dblclick)="onOpenFolder(file.name)">
+            <div class="card-body">
+              <div class="card__inside-box">
+                <i class="far fa-folder fa-3x"></i>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <context-menu #fileMenu>
+      <ng-template contextMenuItem (execute)="onAddFolder()">
+        <i class="far fa-folder"></i>Add folder
+      </ng-template>
+      <ng-template *ngIf="selectedFile" contextMenuItem [passive]="true"><hr></ng-template>
+      <ng-template *ngIf="selectedFile" contextMenuItem [subMenu]="directoriesSubMenu">
+        <i class="far fa-folder-open"></i>Change directory
+      </ng-template>
+      <context-menu #directoriesSubMenu>
+        <ng-template contextMenuItem *ngIf="getDirectories && getDirectories.length > 0" [passive]="true">
+          To:
+        </ng-template>
+
+        <ng-template contextMenuItem *ngIf="getDirectories && getDirectories.length === 0" [passive]="true">
+          No directories
+        </ng-template>
+
+        <ng-template contextMenuItem *ngFor="let directory of getDirectories" (execute)="onChangeFolder(directory)">
+          {{directory.name}}
+        </ng-template>
+      </context-menu>
+    </context-menu>
+  </div>
+</div>

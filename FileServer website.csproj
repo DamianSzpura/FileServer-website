@@ -35,10 +35,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="compilerconfig.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="ClientApp\src\app\_directives\alert.component.html" />
     <None Remove="ClientApp\src\app\_directives\alert.component.ts" />
     <None Remove="ClientApp\src\app\_guards\auth.guard.ts" />
@@ -50,10 +46,6 @@
     <None Remove="ClientApp\src\app\_services\authentication.service.ts" />
     <None Remove="ClientApp\src\app\_services\file.service.ts" />
     <None Remove="ClientApp\src\app\_services\user.service.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="compilerconfig.json" />
   </ItemGroup>
 
   <ItemGroup>

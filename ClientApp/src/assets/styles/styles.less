@@ -1,0 +1,170 @@
+@import url('allVariables.less');
+
+
+.body-content {
+  padding: 0em 15px;
+}
+
+.first {
+  padding: 2rem;
+}
+
+.second {
+  border: 1px solid @black-border;
+  background-color: @white-border;
+  padding: 0 2rem 3.5rem 2rem;
+  margin-bottom: 2rem;
+}
+
+.body__background--color {
+  background-color: #ce93d8;
+  height: 6rem;
+
+  .img--size {
+    display: block;
+    height: 400px;
+    margin-bottom: 20px;
+  }
+
+  .img--background {
+    background-image: @backgroundUrl;
+    background-size: 30rem;
+    background-position: center;
+    background-repeat: repeat;
+    position: relative;
+  }
+}
+
+/* in-flight clone */
+.gu-mirror {
+  position: fixed !important;
+  margin: 0 !important;
+  z-index: 9999 !important;
+  opacity: 0.8;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+  filter: alpha(opacity=80);
+  pointer-events: none;
+}
+/* high-performance display:none; helper */
+.gu-hide {
+  left: -9999px !important;
+}
+/* added to mirrorContainer (default = body) while dragging */
+.gu-unselectable {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+/* added to the source element while its mirror is dragged */
+.gu-transit {
+  opacity: 0.2;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+  filter: alpha(opacity=20);
+}
+
+::-moz-selection {
+  background: @violet;
+  color: @white;
+}
+
+::selection {
+  background: @violet;
+  color: @white;
+}
+
+.ngx-contextmenu {
+  .dropdown-menu {
+    padding: 1rem 1rem;
+    margin: 0;
+    max-width: 20rem;
+  }
+
+  li {
+   @white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  i {
+    margin-right: 1rem;
+  }
+
+  hr {
+    margin-top: 0.7rem;
+  }
+
+  a {
+    margin: 0 1rem;
+    color: @black;
+    font-size: 1rem;
+    position: relative;
+    text-decoration: none !important;
+    .fullTransform(perspective(1px) translateZ(0));
+    .fullTransition(0.3s ease-out);
+  }
+
+  a:focus,
+  a:hover,
+  a:active {
+    cursor: pointer;
+    color: @violet;
+  }
+}
+
+* {
+  font-family: 'NowMedium';
+  font-weight: normal;
+  font-style: normal;
+}
+
+.fa, .far, .fas {
+  font-family: "Font Awesome 5 Free" !important;
+}
+
+html {
+  font-size: 0.4rem;
+
+  body {
+    .col-4 {
+      padding: 0 1.2rem;
+    }
+
+    .col-8 {
+      padding: 0 1.2rem;
+    }
+
+    a {
+      color: @violet;
+    }
+
+    a:hover {
+      color: @violet;
+    }
+
+    code {
+      color: @pink;
+    }
+  }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+  html {
+    font-size: 0.6rem;
+  }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+  html {
+    font-size: 0.8rem;
+  }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+  html {
+    font-size: 1.0rem;
+  }
+}
